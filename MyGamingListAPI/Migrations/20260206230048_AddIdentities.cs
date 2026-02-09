@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Mygaminglistapi.Migrations
+namespace MyGamingListAPI.Migrations
 {
     /// <inheritdoc />
     public partial class AddIdentities : Migration

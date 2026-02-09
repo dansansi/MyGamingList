@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Mygaminglistapi.Migrations
+namespace MyGamingListAPI.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

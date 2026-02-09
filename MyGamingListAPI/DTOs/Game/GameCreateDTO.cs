@@ -1,6 +1,6 @@
 ﻿namespace MyGamingListAPI.DTOs.Game
 {
-    public class GameCreateDTO
+    public class GameCreateDto
     {
         public string Name { get; set; }
 

@@ -7,7 +7,7 @@ using MyGamingListAPI.Data;
 
 #nullable disable
 
-namespace Mygaminglistapi.Migrations
+namespace MyGamingListAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
