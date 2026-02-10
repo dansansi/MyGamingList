@@ -21,7 +21,7 @@ namespace MyGamingListAPI.Controllers
         {
             var games = await _gameService.GetAllAsync();
             return Ok(games);
-         }
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAllGamesById(int id)
@@ -31,6 +31,42 @@ namespace MyGamingListAPI.Controllers
                 if (game == null) return NotFound();
             }
             return Ok(game);
+        }
+
+        [HttpPost]
+        
+        public async Task<IActionResult> CreateGameAsync([FromBody] GameCreateDto dto)
+        {
+            if (dto == null || string.IsNullOrEmpty(dto.Name)) 
+                return BadRequest();
+            
+            var createdGame = await _gameService.CreateAsync(dto);
+
+            return CreatedAtAction(nameof(GetAllGamesById), new
+            {
+                id = createdGame.Id }, createdGame);
+            
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateGameAsync(int id,  [FromBody] GameUpdateDto dto)
+        {
+            if (dto == null || string.IsNullOrEmpty(dto.Name))
+                return BadRequest();
+
+            var success = await _gameService.UpdateAsync(id, dto);
+            if (success == null) return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteGameAsync(int id)
+        {
+            var success = await _gameService.DeleteAsync(id);
+
+            if (!success) return NotFound();
+            return NoContent();
         }
     }
 } 

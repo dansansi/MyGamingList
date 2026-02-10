@@ -36,6 +36,7 @@ namespace MyGamingListAPI.Services.Implementations
         {
             return await _context.Games.Select(g => new GameReadDto
             {
+                Id = g.Id,
                 Name = g.Name
 
             }).ToListAsync();
