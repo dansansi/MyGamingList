@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using MyGamingListAPI.Data;
 using MyGamingListAPI.DTOs.Game;
 using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Interfaces;
-using System.Diagnostics.CodeAnalysis;
 
 namespace MyGamingListAPI.Services.Implementations
 {
@@ -38,7 +36,6 @@ namespace MyGamingListAPI.Services.Implementations
         {
             return await _context.Games.Select(g => new GameReadDto
             {
-                Id = g.Id,
                 Name = g.Name
 
             }).ToListAsync();
