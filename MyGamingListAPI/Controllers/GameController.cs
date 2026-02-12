@@ -24,7 +24,7 @@ namespace MyGamingListAPI.Controllers
             return Ok(games);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAllGamesById(int id)
         {

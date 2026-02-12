@@ -15,21 +15,24 @@ namespace MyGamingListAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager = userManager;
         private readonly TokenService _tokenService = tokenService;
 
-        [HttpGet("register")]
+        [HttpPost("register")]
 
         public async Task<IActionResult> RegisterDTO(RegisterDTO dto)
         {
-            var userExists = await _userManager.FindByNameAsync(dto.UsernName);
+            var userExists = await _userManager.FindByNameAsync(dto.UserName);
             if (userExists != null) return BadRequest("Usuario já cadastrado");
 
-            var user = new IdentityUser
+            var user = new IdentityUser 
             {
-                UserName = dto.UsernName,
+                UserName = dto.UserName,
+
             };
 
             var result = await _userManager.CreateAsync(user, dto.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors);
+
+            await _userManager.AddToRoleAsync(user, "User");
 
             return Ok("Usuário criado");
             
