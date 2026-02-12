@@ -45,7 +45,7 @@ builder.Services.AddAuthentication(options =>
 }); 
     
 
-builder.Services.AddScoped<IGameService, IGameService>();
+builder.Services.AddScoped<IGameService, GameService>();
 
 var app = builder.Build();
 
