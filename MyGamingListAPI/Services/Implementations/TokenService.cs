@@ -6,30 +6,30 @@ using System.Text;
 
 namespace MyGamingListAPI.Services.Implementations
 {
-    public class TokenService
+    public class TokenService(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
-
-        public TokenService(IConfiguration configuration) => _configuration = configuration;
+        private readonly IConfiguration _configuration = configuration;
 
         public string GenerateToken(IdentityUser user, IList<string> roles)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
 
+
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.Email), 
-                new Claim(ClaimTypes.Name, user.UserName)
+                new (ClaimTypes.NameIdentifier, user.Id),
+                new (ClaimTypes.Email, user.Email),
+                new (ClaimTypes.Name, user.UserName)
             };
+
 
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
-
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
+
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
