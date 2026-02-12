@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyGamingListAPI.Data;
+using MyGamingListAPI.Services.Implementations;
 using MyGamingListAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
-builder.Services.AddScoped<IGameService, IGameService>();
+builder.Services.AddScoped<IGameService, GameService>();
 
 var app = builder.Build();
 

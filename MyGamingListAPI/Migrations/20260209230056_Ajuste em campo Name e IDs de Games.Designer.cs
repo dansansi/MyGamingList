@@ -11,8 +11,8 @@ using MyGamingListAPI.Data;
 namespace MyGamingListAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260206230048_AddIdentities")]
-    partial class AddIdentities
+    [Migration("20260209230056_Ajuste em campo Name e IDs de Games")]
+    partial class AjusteemcampoNameeIDsdeGames
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
