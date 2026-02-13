@@ -18,7 +18,8 @@ namespace MyGamingListAPI.Services.Implementations
             var claims = new List<Claim>
             {
                 new (ClaimTypes.NameIdentifier, user.Id),
-                new (ClaimTypes.Name, user.UserName)
+                new (ClaimTypes.Name, user.UserName),
+                new (ClaimTypes.Email, user.Email)
             };
 
 
