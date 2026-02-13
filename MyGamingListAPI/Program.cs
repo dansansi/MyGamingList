@@ -46,12 +46,14 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
+    options.User.RequireUniqueEmail = true;
 
 }).
     AddEntityFrameworkStores<AppDbContext>().
     AddDefaultTokenProviders();
 
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<EmailService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(options =>
