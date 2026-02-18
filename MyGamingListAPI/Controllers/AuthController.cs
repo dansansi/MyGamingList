@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyGamingListAPI.DTOs.Auth;
+using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Implementations;
 using System.Net;
 
@@ -8,9 +9,9 @@ namespace MyGamingListAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController(UserManager<IdentityUser> userManager, TokenService tokenService, EmailService emailService) : ControllerBase
+    public class AuthController(UserManager<AppUser> userManager, TokenService tokenService, EmailService emailService) : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly UserManager<AppUser> _userManager = userManager;
         private readonly TokenService _tokenService = tokenService;
         private readonly EmailService _emailService = emailService;
 
@@ -24,7 +25,7 @@ namespace MyGamingListAPI.Controllers
             var emailExists = await _userManager.FindByEmailAsync(dto.Email);
             if (emailExists != null) return BadRequest("E-mail já cadastrado");
 
-            var user = new IdentityUser 
+            var user = new AppUser
             {
                 UserName = dto.UserName,
                 Email = dto.Email,
@@ -43,7 +44,7 @@ namespace MyGamingListAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            IdentityUser user;
+            AppUser user;
 
             if (dto.Login.Contains("@"))
             {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MyGamingListAPI.Data;
+using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Implementations;
 using MyGamingListAPI.Services.Interfaces;
 using System.Text;
@@ -42,7 +43,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
@@ -52,6 +53,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     AddEntityFrameworkStores<AppDbContext>().
     AddDefaultTokenProviders();
 
+builder.Services.AddHttpClient<RawgApiService>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<EmailService>();
 
