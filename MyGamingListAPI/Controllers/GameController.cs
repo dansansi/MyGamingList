@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyGamingListAPI.DTOs.Game;
-using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Interfaces;
 
 namespace MyGamingListAPI.Controllers
