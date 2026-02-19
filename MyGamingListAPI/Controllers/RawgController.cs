@@ -16,7 +16,7 @@ namespace MyGamingListAPI.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> Search([FromQuery] string query, int page = 1)
+        public async Task<IActionResult> Search([FromQuery] string query, int page = 1, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(query)) return BadRequest("Busca vazia.");
 
@@ -27,7 +27,9 @@ namespace MyGamingListAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                Console.WriteLine(ex);
+                return StatusCode(500, "Erro ao consultar API externa.");
+                
             }
         }
         [HttpGet("{id:int}")]

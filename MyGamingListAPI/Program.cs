@@ -53,9 +53,14 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     AddEntityFrameworkStores<AppDbContext>().
     AddDefaultTokenProviders();
 
-builder.Services.AddHttpClient<RawgApiService>();
-builder.Services.AddScoped<TokenService>();
-builder.Services.AddScoped<EmailService>();
+builder.Services.AddHttpClient<IRawgApiService, RawgApiService>(client =>
+{
+    client.BaseAddress = new Uri("https://api.rawg.io/api/");
+});
+
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IGameService, GameService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(options =>
@@ -78,9 +83,6 @@ builder.Services.AddAuthentication(options =>
             Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
     };
 }); 
-    
-
-builder.Services.AddScoped<IGameService, GameService>();
 
 var app = builder.Build();
 
@@ -101,7 +103,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    string[] roles = { "Admin", "User" };
+    string[] roles = ["Admin", "User"];
 
     foreach (var role in roles)
     {
