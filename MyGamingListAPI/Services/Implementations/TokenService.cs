@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using MyGamingListAPI.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace MyGamingListAPI.Services.Implementations
 {
-    public class TokenService(IConfiguration configuration)
+    public class TokenService(IConfiguration configuration) : ITokenService
     {
         private readonly IConfiguration _configuration = configuration;
 
@@ -18,8 +19,8 @@ namespace MyGamingListAPI.Services.Implementations
             var claims = new List<Claim>
             {
                 new (ClaimTypes.NameIdentifier, user.Id),
-                new (ClaimTypes.Name, user.UserName),
-                new (ClaimTypes.Email, user.Email)
+                new (ClaimTypes.Name, user.UserName!),
+                new (ClaimTypes.Email, user.Email!)
             };
 
 
@@ -28,7 +29,7 @@ namespace MyGamingListAPI.Services.Implementations
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
+                Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!));
 
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -37,7 +38,7 @@ namespace MyGamingListAPI.Services.Implementations
                 issuer: jwtSettings["Issuer"],
                 audience: jwtSettings["Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(double.Parse(jwtSettings["ExpirationMinutes"])),
+                expires: DateTime.UtcNow.AddMinutes(double.Parse(jwtSettings["ExpirationMinutes"]!)),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyGamingListAPI.DTOs.Game;
-using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Interfaces;
 
 namespace MyGamingListAPI.Controllers
@@ -24,7 +23,7 @@ namespace MyGamingListAPI.Controllers
             return Ok(games);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAllGamesById(int id)
         {

@@ -1,9 +1,10 @@
-﻿using System.Net;
+﻿using MyGamingListAPI.Services.Interfaces;
+using System.Net;
 using System.Net.Mail;
 
 namespace MyGamingListAPI.Services.Implementations
 {
-    public class EmailService
+    public class EmailService : IEmailService
     {
         private readonly string _smtpHost = "smtp.gmail.com";
         private readonly int _smtpPort = 587;

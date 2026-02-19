@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MyGamingListAPI.Data;
+using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Implementations;
 using MyGamingListAPI.Services.Interfaces;
 using System.Text;
@@ -42,7 +43,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
@@ -52,8 +53,14 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     AddEntityFrameworkStores<AppDbContext>().
     AddDefaultTokenProviders();
 
-builder.Services.AddScoped<TokenService>();
-builder.Services.AddScoped<EmailService>();
+builder.Services.AddHttpClient<IRawgApiService, RawgApiService>(client =>
+{
+    client.BaseAddress = new Uri("https://api.rawg.io/api/");
+});
+
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IGameService, GameService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(options =>
@@ -76,9 +83,6 @@ builder.Services.AddAuthentication(options =>
             Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
     };
 }); 
-    
-
-builder.Services.AddScoped<IGameService, GameService>();
 
 var app = builder.Build();
 
@@ -99,7 +103,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    string[] roles = { "Admin", "User" };
+    string[] roles = ["Admin", "User"];
 
     foreach (var role in roles)
     {
