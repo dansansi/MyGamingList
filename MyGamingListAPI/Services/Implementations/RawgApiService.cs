@@ -4,10 +4,11 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MyGamingListAPI.Services.Implementations
 {
-    public class RawgApiService (IConfiguration configuration, HttpClient httpClient) : IRawgApiService
-    {
+    public class RawgApiService (IConfiguration configuration, HttpClient httpClient, ILogger<RawgApiService> logger) : IRawgApiService
+    { 
         private readonly HttpClient _httpClient = httpClient;
         private readonly string _apiKey = configuration["Rawg:ApiKey"]!;
+        private readonly ILogger _logger;
 
         public async Task<List<RawgGameDto>> SearchGamesAsync (string query, int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {

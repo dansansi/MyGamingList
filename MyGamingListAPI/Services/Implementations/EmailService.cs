@@ -4,27 +4,38 @@ using System.Net.Mail;
 
 namespace MyGamingListAPI.Services.Implementations
 {
-    public class EmailService : IEmailService
+    public class EmailService(ILogger<EmailService> logger, IConfiguration configuration) : IEmailService
     {
         private readonly string _smtpHost = "smtp.gmail.com";
         private readonly int _smtpPort = 587;
         private readonly string _smtpUser = "MyGamingListSansi@gmail.com";
-        private readonly string _smtpPass = "avka fbnw dnzk wybv";
+        private readonly string _smtpPass = configuration["E-mail:Key"]!;
+        private readonly ILogger<EmailService> _logger = logger;
 
-        public void SendEmail(string to, string subject, string body)
+
+        public async Task SendEmailAsync(string to, string subject, string body)
         {
-            using var client = new SmtpClient(_smtpHost, _smtpPort)
+            try
             {
-                Credentials = new NetworkCredential(_smtpUser, _smtpPass),
-                EnableSsl = true
-            };
+                using var client = new SmtpClient(_smtpHost, _smtpPort)
+                {
+                    Credentials = new NetworkCredential(_smtpUser, _smtpPass),
+                    EnableSsl = true
+                };
 
-            var mail = new MailMessage(_smtpUser, to, subject, body)
+                var mail = new MailMessage(_smtpUser, to, subject, body)
+                {
+                    IsBodyHtml = true
+                };
+
+                await client.SendMailAsync(mail);
+                _logger.LogInformation("E-mail de redefiniçao de senha enviado para {Destinatario}", to);
+            }
+            catch (Exception ex)
             {
-                IsBodyHtml = true
-            };
-
-            client.Send(mail);
+                _logger.LogError(ex, "Erro ao enviar e-mail para {Destinatario}", to);
+                throw;
+            }
         }
     }
 }
