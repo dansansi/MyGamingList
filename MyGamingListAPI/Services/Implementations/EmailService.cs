@@ -9,7 +9,7 @@ namespace MyGamingListAPI.Services.Implementations
         private readonly string _smtpHost = "smtp.gmail.com";
         private readonly int _smtpPort = 587;
         private readonly string _smtpUser = "MyGamingListSansi@gmail.com";
-        private readonly string _smtpPass = "avka fbnw dnzk wybv";
+        private readonly string _smtpPass = "************";
 
         public void SendEmail(string to, string subject, string body)
         {
