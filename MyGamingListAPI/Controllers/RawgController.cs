@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyGamingListAPI.Services.Implementations;
+using MyGamingListAPI.Services.Interfaces;
 
 
 namespace MyGamingListAPI.Controllers
@@ -8,9 +9,9 @@ namespace MyGamingListAPI.Controllers
     [Route("rawgApi/[controller]")]
     public class RawgController : ControllerBase
     {
-        private readonly RawgApiService _rawgApiService;
+        private readonly IRawgApiService _rawgApiService;
 
-        public RawgController(RawgApiService rawgApiService)
+        public RawgController(IRawgApiService rawgApiService)
         {
             _rawgApiService = rawgApiService;
         }

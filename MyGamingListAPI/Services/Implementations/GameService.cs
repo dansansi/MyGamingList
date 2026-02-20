@@ -17,7 +17,13 @@ namespace MyGamingListAPI.Services.Implementations
             {
                 var game = new Game
                 {
+                    ExternalID = dto.ExternalID,
                     Name = dto.Name,
+                    Description = dto.Description,
+                    Slug = dto.Slug,
+                    BackgroundImage = dto.BackgroundImage,
+                    ReleaseDate = dto.ReleaseDate,
+                    Rating = dto.Rating,
                 };
 
                 _context.Add(game);
@@ -50,7 +56,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError("Erro buscar dados", ex.Message);
+                _logger.LogError(ex, "Erro buscar dados");
                 throw;
             }
         }
@@ -72,7 +78,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError("Erro ao buscar jogo {id}", id, ex.Message);
+                _logger.LogError(ex, "Erro ao buscar jogo {id}", id);
                 throw;
             }
         }
@@ -97,7 +103,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError("Erro ao atualizar jogo", ex.Message);
+                _logger.LogError(ex, "Erro ao atualizar jogo");
                 throw;
             }
         }
@@ -115,10 +121,9 @@ namespace MyGamingListAPI.Services.Implementations
                 return true;
             }
             catch (Exception ex) {
-                _logger.LogError("Erro ao excluir jogo", ex.Message);
+                _logger.LogError(ex, "Erro ao excluir jogo id:{Id}", id);
                 throw;
             }
-            
         }
     }
 }

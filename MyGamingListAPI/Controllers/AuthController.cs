@@ -3,17 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using MyGamingListAPI.DTOs.Auth;
 using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Implementations;
+using MyGamingListAPI.Services.Interfaces;
 using System.Net;
 
 namespace MyGamingListAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController(UserManager<AppUser> userManager, TokenService tokenService, EmailService emailService) : ControllerBase
+    public class AuthController(UserManager<AppUser> userManager, ITokenService tokenService, IEmailService emailService) : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager = userManager;
-        private readonly TokenService _tokenService = tokenService;
-        private readonly EmailService _emailService = emailService;
+        private readonly ITokenService _tokenService = tokenService;
+        private readonly IEmailService _emailService = emailService;
 
         [HttpPost("register")]
 
