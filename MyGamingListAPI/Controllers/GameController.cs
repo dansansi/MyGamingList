@@ -7,14 +7,9 @@ namespace MyGamingListAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GameController : ControllerBase
+    public class GameController(IGameService gameService) : ControllerBase
     {
-        private readonly IGameService _gameService;
-
-        public GameController(IGameService gameService)
-        {
-            _gameService = gameService;
-        }
+        private readonly IGameService _gameService = gameService;
 
         [HttpGet]
         public async Task<IActionResult> GetAllGames()
@@ -23,11 +18,10 @@ namespace MyGamingListAPI.Controllers
             return Ok(games);
         }
 
-        [Authorize(Roles = "User")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAllGamesById(int id)
+        [HttpGet("{externalId}")]
+        public async Task<IActionResult> GetGameById(int externalId)
         {
-            var game = await _gameService.GetByIdAsync(id);
+            var game = await _gameService.GetOrCreateGameByIdAsync(externalId);
             {
                 if (game == null) return NotFound();
             }
@@ -35,18 +29,17 @@ namespace MyGamingListAPI.Controllers
         }
 
         [HttpPost]
-        
         public async Task<IActionResult> CreateGameAsync([FromBody] GameCreateDto dto)
         {
-            if (dto == null || string.IsNullOrEmpty(dto.Name)) 
+            if (dto == null || string.IsNullOrEmpty(dto.Name))
                 return BadRequest();
-            
+
             var createdGame = await _gameService.CreateAsync(dto);
 
-            return CreatedAtAction(nameof(GetAllGamesById), new
+            return CreatedAtAction(nameof(GetGameById), new
             {
-                id = createdGame.Id }, createdGame);
-            
+                externalId = createdGame.ExternalId
+            }, createdGame);
         }
 
         [HttpPut("{id}")]
@@ -61,6 +54,7 @@ namespace MyGamingListAPI.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> DeleteGameAsync(int id)
         {

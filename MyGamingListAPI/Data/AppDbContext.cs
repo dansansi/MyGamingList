@@ -5,9 +5,8 @@ using MyGamingListAPI.Models;
 
 namespace MyGamingListAPI.Data
 {
-    public class AppDbContext : IdentityDbContext<AppUser>
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext<AppUser>(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<Game> Games { get; set; }
         public DbSet<UserGames> UserGames { get; set; }
 
@@ -28,7 +27,7 @@ namespace MyGamingListAPI.Data
                 .HasForeignKey(ug => ug.GameId);
 
             builder.Entity<Game>()
-                .HasIndex(g => g.ExternalID)
+                .HasIndex(g => g.ExternalId)
                 .IsUnique();
 
             builder.Entity<Game>()
