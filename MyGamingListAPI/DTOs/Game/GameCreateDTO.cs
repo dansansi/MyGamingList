@@ -2,10 +2,9 @@
 {
     public class GameCreateDto
     {
-        public int Id { get; set; }
         public int ExternalId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public string Slug { get; set; } = null!;
         public string BackgroundImage { get; set; } = null!;
         public DateTime? ReleaseDate { get; set; }

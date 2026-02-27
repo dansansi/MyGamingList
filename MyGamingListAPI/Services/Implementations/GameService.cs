@@ -24,6 +24,7 @@ namespace MyGamingListAPI.Services.Implementations
                     Name = dto.Name,
                     Description = dto.Description,
                     Slug = dto.Slug,
+                    Tba = dto.Tba,
                     BackgroundImage = dto.BackgroundImage,
                     ReleaseDate = dto.ReleaseDate,
                     Rating = dto.Rating,
@@ -141,7 +142,7 @@ namespace MyGamingListAPI.Services.Implementations
 
                 await _context.SaveChangesAsync();
 
-                _logger.LogInformation("Dados do jogo {OldName} atualizado para {NewName}", dto.Name, game.Name);
+                _logger.LogInformation("Dados do jogo {OldName} atualizado para {NewName}", game.Name, dto.Name);
                 return new GameReadDto
                 {
                     Id = game.Id,

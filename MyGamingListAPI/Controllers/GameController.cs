@@ -28,6 +28,7 @@ namespace MyGamingListAPI.Controllers
             return Ok(game);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateGameAsync([FromBody] GameCreateDto dto)
         {
@@ -42,6 +43,7 @@ namespace MyGamingListAPI.Controllers
             }, createdGame);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateGameAsync(int id,  [FromBody] GameUpdateDto dto)
         {
@@ -55,7 +57,7 @@ namespace MyGamingListAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameAsync(int id)
         {
             var success = await _gameService.DeleteAsync(id);
