@@ -6,9 +6,9 @@ using MyGamingListAPI.Services.Interfaces;
 
 namespace MyGamingListAPI.Services.Implementations
 {
-    public class UserGameService(AppDbContext dbContext, ILogger logger, IGameService gameService) : IUserGameService
+    public class UserGameService(AppDbContext dbContext, ILogger logger) : IUserGameService
     {
-        private readonly IGameService _gameService = gameService;
+
         private readonly AppDbContext _dbContext = dbContext;
         private readonly ILogger _logger = logger;
 
@@ -81,7 +81,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
         }
 
-        public async Task<bool> RemoveAsync(string userId, int externalId)
+        public async Task<bool> RemoveGameFromUserListAsync(string userId, int externalId)
         {
             try
             {

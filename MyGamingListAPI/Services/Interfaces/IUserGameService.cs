@@ -6,6 +6,6 @@ namespace MyGamingListAPI.Services.Interfaces
     {
         Task<UserGameResponseDto> AddOrUpdateGameOnListAsync(string userId, UserGameRequestDto dto);
         Task<IEnumerable<UserGameResponseDto>> GetAllUserGamesAsync(string userId);
-        Task<bool> RemoveAsync (string userId, int externalId);
+        Task<bool> RemoveGameFromUserListAsync(string userId, int externalId);
     }
 }
