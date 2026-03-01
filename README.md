@@ -8,6 +8,7 @@ ASP.NET Core Web API for managing a personal game library (played, playing, wish
 - Entity Framework Core
 - SQLite
 - Identity Framework
+- JWT Authentication
 - React
 
 ## Purpose
