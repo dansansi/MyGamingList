@@ -59,7 +59,13 @@ namespace MyGamingListAPI.Services.Implementations
                 return await _context.Games.Select(g => new GameReadDto
                 {
                     Id = g.Id,
-                    Name = g.Name
+                    ExternalId = g.ExternalId,
+                    Name = g.Name, 
+                    Description = g.Description,
+                    ReleaseDate = g .ReleaseDate,
+                    Tba = g.Tba,
+                    BackgroundImage =  g.BackgroundImage,
+                    Rating = g.Rating
 
                 }).ToListAsync();
             }

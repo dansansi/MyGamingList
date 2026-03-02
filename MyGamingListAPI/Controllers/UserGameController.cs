@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace MyGamingListAPI.Controllers
 {
     [ApiController]
-    [Route("api/{controller}")]
+    [Route("api/UserGame/[controller]")]
     [Authorize]
     public class UserGameController(IUserGameService userGameService) : ControllerBase
     {
@@ -15,6 +15,7 @@ namespace MyGamingListAPI.Controllers
         private string? GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         [HttpGet]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> GetUserGames()
         {
             var userId = GetUserId();
@@ -25,6 +26,7 @@ namespace MyGamingListAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> AddOrUpdateGame([FromBody] UserGameRequestDto dto)
         {
             var userId = GetUserId();
@@ -33,8 +35,9 @@ namespace MyGamingListAPI.Controllers
             var result = await _userGameService.AddOrUpdateGameOnListAsync(userId, dto);
             return Ok(result);
         }
-
+        
         [HttpDelete("{externalId}")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> DeleteGame([FromQuery] int externalId)
         {
             var userId = GetUserId();

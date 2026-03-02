@@ -6,7 +6,7 @@ using MyGamingListAPI.Services.Interfaces;
 
 namespace MyGamingListAPI.Services.Implementations
 {
-    public class UserGameService(AppDbContext dbContext, ILogger logger) : IUserGameService
+    public class UserGameService(AppDbContext dbContext, ILogger<UserGameService> logger) : IUserGameService
     {
 
         private readonly AppDbContext _dbContext = dbContext;
