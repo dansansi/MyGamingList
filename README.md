@@ -16,5 +16,5 @@ ASP.NET Core Web API for managing a personal game library (played, playing, wish
 This project is intended for users that wanna keep track of games played, and set each game's status accordingly (finished, wishlisted, dropped...) favorite, to through them easily.
 
 ## Status
-Backend - Done
-Frontend - In development
+- Backend Done
+- Frontend In development
