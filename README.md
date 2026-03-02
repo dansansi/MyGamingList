@@ -9,12 +9,12 @@ ASP.NET Core Web API for managing a personal game library (played, playing, wish
 - SQLite
 - Identity Framework
 - JWT Authentication
-- React
+- Next.Js
 
 ## Purpose
 
-This project is intended for users that wanna keep track of games played, and set each game's status accordingly (finished, wishlisted, dropped...) and rate them with a personal score and go through them easily.
+This project is intended for users that wanna keep track of games played, and set each game's status accordingly (finished, wishlisted, dropped...) favorite, to through them easily.
 
 ## Status
-
-In Development
+Backend - Done
+Frontend - In development
