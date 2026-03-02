@@ -1,6 +1,5 @@
 ﻿using MyGamingListAPI.DTOs.RawgApi;
 using MyGamingListAPI.Services.Interfaces;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MyGamingListAPI.Services.Implementations
 {
@@ -8,7 +7,7 @@ namespace MyGamingListAPI.Services.Implementations
     { 
         private readonly HttpClient _httpClient = httpClient;
         private readonly string _apiKey = configuration["Rawg:ApiKey"]!;
-        private readonly ILogger _logger;
+        private readonly ILogger _logger = logger;
 
         public async Task<List<RawgGameDto>> SearchGamesAsync (string query, int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {
@@ -30,7 +29,7 @@ namespace MyGamingListAPI.Services.Implementations
         {
             try
             {
-                var url = $"https://api.rawg.io/api/games/{id}?key={_apiKey}";
+                var url = $"games/{id}?key={_apiKey}";
 
                 var response = await _httpClient.GetFromJsonAsync<RawgGameDto>(url, cancellationToken);
 
@@ -38,7 +37,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao buscar jogo {Id}", id);
+                _logger.LogError(ex, "Erro ao buscar jogo da Api Externa {Id}", id);
                 throw;
             }
         }

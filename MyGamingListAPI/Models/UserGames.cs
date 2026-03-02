@@ -8,6 +8,7 @@
         public Game Game { get; set; } = null!;
         public GameStatus Status { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool IsFavorite { get; set; } = false;
     }
 
     public enum GameStatus
@@ -16,6 +17,6 @@
         Playing = 1,
         Completed = 2,
         Paused = 3,
-        Dropped = 4
+        Dropped = 4,
     };
 }

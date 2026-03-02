@@ -1,15 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using MyGamingListAPI.Data;
 using MyGamingListAPI.DTOs.Game;
+using MyGamingListAPI.DTOs.RawgApi;
 using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Interfaces;
 
 namespace MyGamingListAPI.Services.Implementations
 {
-    public class GameService(AppDbContext context, ILogger<GameService> logger) : IGameService
+    public class GameService(IRawgApiService rawgApiService, AppDbContext context, ILogger<GameService> logger) : IGameService
     {
         private readonly AppDbContext _context = context;
         private readonly ILogger _logger = logger;
+        private readonly IRawgApiService _rawgApiService = rawgApiService;
 
         public async Task<GameReadDto> CreateAsync(GameCreateDto dto)
         {
@@ -17,10 +20,11 @@ namespace MyGamingListAPI.Services.Implementations
             {
                 var game = new Game
                 {
-                    ExternalID = dto.ExternalID,
+                    ExternalId = dto.ExternalId,
                     Name = dto.Name,
                     Description = dto.Description,
                     Slug = dto.Slug,
+                    Tba = dto.Tba,
                     BackgroundImage = dto.BackgroundImage,
                     ReleaseDate = dto.ReleaseDate,
                     Rating = dto.Rating,
@@ -32,13 +36,18 @@ namespace MyGamingListAPI.Services.Implementations
                 _logger.LogInformation("Jogo cadastrado com sucesso. {Game}", game.Name);
                 return new GameReadDto
                 {
-                    Id = game.Id,
-                    Name = game.Name
+                    ExternalId = game.ExternalId,
+                    Name = game.Name,
+                    Description = game.Description,
+                    Rating = game.Rating,
+                    ReleaseDate = game.ReleaseDate,
+                    BackgroundImage = game.BackgroundImage,
+                    Tba = game.Tba,
                 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message,"Erro ao cadastrar jogo {Game}.", dto.Name);
+                _logger.LogError(ex, "Erro ao cadastrar jogo {Game}.", dto.Name);
                 throw;
             }
         }
@@ -50,35 +59,80 @@ namespace MyGamingListAPI.Services.Implementations
                 return await _context.Games.Select(g => new GameReadDto
                 {
                     Id = g.Id,
-                    Name = g.Name
+                    ExternalId = g.ExternalId,
+                    Name = g.Name, 
+                    Description = g.Description,
+                    ReleaseDate = g .ReleaseDate,
+                    Tba = g.Tba,
+                    BackgroundImage =  g.BackgroundImage,
+                    Rating = g.Rating
 
                 }).ToListAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro buscar dados");
+                _logger.LogError(ex, "Erro ao buscar lista de jogos do banco de dados.");
                 throw;
             }
         }
 
-        public async Task<GameReadDto?> GetByIdAsync(int id)
+        public async Task<GameReadDto?> GetOrCreateGameByIdAsync(int externalId)
         {
             try
             {
-                var game = await _context.Games.FindAsync(id);
-                {
-                    if (game == null) return null;
+                //Procura do banco de dados
+                var game = await _context.Games.FirstOrDefaultAsync(g => g.ExternalId == externalId);
 
-                    return new GameReadDto
+                if (game == null)
+                {
+                    //Procura da Api
+                    var apiGame = new RawgGameDto();
+                    apiGame = await _rawgApiService.SearchGameByIdAsync(externalId);
+
+                    if (apiGame == null) return (null);
+
+                    var gameCreate = new GameCreateDto
                     {
-                        Id = game.Id,
-                        Name = game.Name
+                        ExternalId = apiGame.Id,
+                        Name = apiGame.Name!,
+                        Description = apiGame.Description!,
+                        Slug = apiGame.Slug!,
+                        BackgroundImage = apiGame.Background_Image!,
+                        ReleaseDate = apiGame.Released,
+                        Tba = apiGame.Tba,
+                        Rating = apiGame.Rating,
                     };
+
+                    //Cria jogo no banco de dados.
+                    var createdGame = await CreateAsync(gameCreate);
+
+                    return createdGame;
                 }
+
+                return new GameReadDto
+                {
+                    ExternalId = game.ExternalId,
+                    Name = game.Name,
+                    Description = game.Description,
+                    Rating = game.Rating,
+                    ReleaseDate = game.ReleaseDate,
+                    Tba = game.Tba,
+                    BackgroundImage = game.BackgroundImage,
+                };
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogo da Api externa {Id}", externalId);
+                throw;
+            }
+            catch (SqliteException ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogo do banco de dados {Id}", externalId);
+                throw;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao buscar jogo {id}", id);
+                _logger.LogError(ex, "Erro ao buscar jogos {Id}", externalId);
                 throw;
             }
         }
@@ -94,7 +148,7 @@ namespace MyGamingListAPI.Services.Implementations
 
                 await _context.SaveChangesAsync();
 
-                _logger.LogInformation("Dados do jogo {OldName} atualizado para {NewName}", dto.Name, game.Name);
+                _logger.LogInformation("Dados do jogo {OldName} atualizado para {NewName}", game.Name, dto.Name);
                 return new GameReadDto
                 {
                     Id = game.Id,

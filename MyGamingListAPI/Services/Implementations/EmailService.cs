@@ -13,7 +13,7 @@ namespace MyGamingListAPI.Services.Implementations
         private readonly ILogger<EmailService> _logger = logger;
 
 
-        public async Task SendEmailAsync(string to, string subject, string body)
+        public async Task SendPasswordRedoEmailAsync(string to, string subject, string body)
         {
             try
             {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyGamingListAPI.Services.Implementations;
 using MyGamingListAPI.Services.Interfaces;
 
 
@@ -21,17 +20,9 @@ namespace MyGamingListAPI.Controllers
         {
             if (string.IsNullOrEmpty(query)) return BadRequest("Busca vazia.");
 
-            try
-            {
                 var games = await _rawgApiService.SearchGamesAsync(query, page);
                 return Ok(games);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return StatusCode(500, "Erro ao consultar API externa.");
-                
-            }
+
         }
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
