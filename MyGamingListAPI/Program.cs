@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Writers;
 using MyGamingListAPI.Data;
 using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Implementations;
