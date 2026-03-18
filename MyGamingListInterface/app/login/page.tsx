@@ -1,0 +1,60 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export default function LoginPage() {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  async function handleSubmit() {
+    setError("");
+
+    const response = await fetch("api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ login, password }),
+    });
+
+    if (!response.ok) {
+      setError("Login ou senha invalidos");
+      return;
+    }
+    router.push("/");
+  }
+
+  return (
+    <main className="flex items-center justify-center min-h-screen">
+      <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-sm flex flex-col gap-4">
+        <h1 className="text-white text-2xl font-semibold">Entrar</h1>
+
+        <input
+          type="login"
+          placeholder="Username ou Email"
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
+          className="bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-zinc-500"
+        />
+
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-zinc-500"
+        />
+
+        {error && <p className="text-red-400 text-sm">{error}</p>}
+
+        <button
+          onClick={handleSubmit}
+          className="bg-zinc-600 hover:bg-zinc-500 text-white rounded-lg px-4 py-2 font-medium transition-colors"
+        >
+          Logar
+        </button>
+      </div>
+    </main>
+  );
+}
