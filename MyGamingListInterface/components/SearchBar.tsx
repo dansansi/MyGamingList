@@ -19,7 +19,7 @@ export default function SearchBar() {
     const timer = setTimeout(async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`/api/search?q${query}`);
+        const response = await fetch(`/api/search?q=${query}`);
         const data = await response.json();
         setResults(data.slice(0, 5));
       } catch (error) {
