@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace MyGamingListAPI.Controllers
 {
     [ApiController]
-    [Route("api/UserGame/[controller]")]
+    [Route("api/[controller]")]
     [Authorize]
     public class UserGameController(IUserGameService userGameService) : ControllerBase
     {

@@ -1,7 +1,9 @@
+import { Game } from "./game";
+
 export interface UserGame {
   userId: string;
   gameId: number;
-  game: Gamepad;
+  game: Game;
   status: GameStatus;
   createdAt: string;
   isFavorite: boolean;
