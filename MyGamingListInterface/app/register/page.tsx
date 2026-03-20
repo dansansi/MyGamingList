@@ -49,7 +49,7 @@ export default function RegisterPage() {
 
         <div className="w-full">
           <input
-            type="text"
+            type="password"
             placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
