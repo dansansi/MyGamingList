@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [login, setLogin] = useState("");
@@ -46,6 +47,8 @@ export default function LoginPage() {
           className="bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-zinc-500"
         />
 
+        
+
         {error && <p className="text-red-400 text-sm">{error}</p>}
 
         <button
@@ -54,6 +57,13 @@ export default function LoginPage() {
         >
           Logar
         </button>
+
+        <p className="text-zinc-400 text-sm text-center">
+          Não tem conta?{" "}
+          <Link href="/register" className="text-white hover:underline">
+            Cadastre-se
+          </Link>
+        </p>
       </div>
     </main>
   );
