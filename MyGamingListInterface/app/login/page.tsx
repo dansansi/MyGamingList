@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -9,6 +9,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   async function handleSubmit() {
     setError("");
@@ -23,7 +24,8 @@ export default function LoginPage() {
       setError("Login ou senha invalidos");
       return;
     }
-    router.push("/");
+    const redirect = searchParams.get("redirect") || "/";
+    router.push(redirect);
   }
 
   return (
