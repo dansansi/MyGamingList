@@ -6,5 +6,7 @@ namespace MyGamingListAPI.Services.Interfaces
     {
         Task<List<RawgGameDto>> SearchGamesAsync(string query, int page = 1, int pageSize = 12, CancellationToken cancellationToken = default);
         Task<RawgGameDto?> SearchGameByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<List<RawgGameDto>> GetUpcomingGamesAsync(CancellationToken cancellationToken = default);
+        Task<List<RawgGameDto>> GetHotReleasesAsync(CancellationToken cancellationToken = default);
     }
 }

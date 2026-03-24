@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 export default function Header() {
   return (
     <header className="w-full bg-zinc-800 px-6 py-4 flex items-center justify-between">
-      <span className="text-white font-semibold text-xl">
+      <span className="text-red-400 font-semibold text-xl">
         <Link href={"/"}>MyGamingList</Link>
       </span>
       <SearchBar></SearchBar>

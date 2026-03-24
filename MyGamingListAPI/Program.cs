@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MyGamingListAPI.Data;
+using MyGamingListAPI.Jobs;
 using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Implementations;
 using MyGamingListAPI.Services.Interfaces;
@@ -64,6 +65,8 @@ builder.Services.AddHttpClient<IRawgApiService, RawgApiService>(client =>
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IHomeGamesService, HomeGamesService>();
+builder.Services.AddHostedService<HomeGamesSyncJob>();
 builder.Services.AddTransient<IUserGameService, UserGameService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
