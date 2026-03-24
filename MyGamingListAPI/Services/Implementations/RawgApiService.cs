@@ -41,5 +41,45 @@ namespace MyGamingListAPI.Services.Implementations
                 throw;
             }
         }
+
+        public async Task<List<RawgGameDto>> GetUpcomingGamesAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                var futureDate = DateTime.UtcNow.AddMonths(1).ToString("yyyy-MM-dd");
+
+                var upcomingUrl = $"games?key={_apiKey}&dates={today},{futureDate}&ordering=released&page-size=15";
+
+                var upcoming =  await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(upcomingUrl, cancellationToken);
+
+                return upcoming!.Results ?? new List<RawgGameDto>();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogos upcoming pra home");
+                throw;
+            }
+        }
+
+        public async Task<List<RawgGameDto>> GetHotReleasesAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                var pastDate = DateTime.UtcNow.AddMonths(-1).ToString("yyyy-MM-dd");
+
+                var hotReleasesUrl = $"games?key={_apiKey}&dates={pastDate},{today}&ordering=released&page-size=15";
+
+                var hotReleases = await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(hotReleasesUrl, cancellationToken);
+
+                return hotReleases!.Results?? new List<RawgGameDto>();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogos pra home");
+                throw;
+            }
+        }
     }
 }

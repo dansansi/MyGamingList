@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -10,6 +10,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   async function handleSubmit() {
     setError("");
@@ -24,7 +25,8 @@ export default function RegisterPage() {
       setError("Erro ao criar usuario");
       return;
     }
-    router.push("/login");
+    const redirect = searchParams.get("redirect") || "/";
+    router.push(redirect);
   }
   return (
     <main className="flex items-center justify-center min-h-screen">

@@ -9,6 +9,7 @@ namespace MyGamingListAPI.Data
     {
         public DbSet<Game> Games { get; set; }
         public DbSet<UserGames> UserGames { get; set; }
+        public DbSet<HomeGames> HomeGames { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
