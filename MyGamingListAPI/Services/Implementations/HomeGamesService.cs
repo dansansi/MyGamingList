@@ -62,7 +62,7 @@ namespace MyGamingListAPI.Services.Implementations
                 var homeGames = await _context.HomeGames.ToListAsync();
                 var upcoming = homeGames.Where(g => g.Type == HomeGameType.Upcoming).Select(g => new HomeGamesDto
                 {
-                    ExternalId = g.Id,
+                    ExternalId = g.ExternalId,
                     Name = g.Name,
                     ReleaseDate = g.Released,
                     BackgroundImage = g.BackgroundImage
@@ -70,7 +70,7 @@ namespace MyGamingListAPI.Services.Implementations
 
                 var hotReleases = homeGames.Where(g => g.Type == HomeGameType.HotRelease).Select(g => new HomeGamesDto
                 {
-                    ExternalId = g.Id,
+                    ExternalId = g.ExternalId,
                     Name = g.Name,
                     ReleaseDate = g.Released,
                     BackgroundImage = g.BackgroundImage
