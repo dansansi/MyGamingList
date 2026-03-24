@@ -12,6 +12,14 @@ export default function RegisterPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const passwordRules = {
+    maiuscula: /[A-Z]/.test(password),
+    minuscula: /[a-z]/.test(password),
+    especial: /[^a-zA-Z0-9]/.test(password),
+    numero: /[0-9]/.test(password),
+    minimo: password.length >= 8,
+  };
+
   async function handleSubmit() {
     setError("");
 
@@ -58,11 +66,11 @@ export default function RegisterPage() {
             className="bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-zinc-500 w-full"
           />
 
-          <p className="text-zinc-500 text-xs mt-1">1 maiúscula</p>
-          <p className="text-zinc-500 text-xs">1 minúscula</p>
-          <p className="text-zinc-500 text-xs">1 caracter especial</p>
-          <p className="text-zinc-500 text-xs">1 número</p>
-          <p className="text-zinc-500 text-xs">Minimo 8 digitos</p>
+          <p className={`text-xs mt-1 ${passwordRules.maiuscula ? "text-green-400" : "text-zinc-500"}`}>1 maiúscula</p>
+          <p className={`text-xs mt-1 ${passwordRules.minuscula ? "text-green-400" : "text-zinc-500"}`}>1 minúscula</p>
+          <p className={`text-xs mt-1 ${passwordRules.especial ? "text-green-400" : "text-zinc-500"}`}>1 caracter especial</p>
+          <p className={`text-xs mt-1 ${passwordRules.numero ? "text-green-400" : "text-zinc-500"}`}>1 número</p>
+          <p className={`text-xs mt-1 ${passwordRules.minimo ? "text-green-400" : "text-zinc-500"}`}>Minimo 8 digitos</p>
         </div>
 
         {error && <p className="text-red-400 text-sm">{error}</p>}
