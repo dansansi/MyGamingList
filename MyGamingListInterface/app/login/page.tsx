@@ -1,13 +1,24 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function LoginPage() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [bgImage, setBgImage] = useState("");
+
+  useEffect(() => {
+    async function getBackgroundImage() {
+      const res = await fetch("/api/Game/BackgroundImage");
+      const img = await res.text();
+      setBgImage(img.trim());
+    }
+    getBackgroundImage();
+  }, []);
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -29,7 +40,10 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex items-center justify-center min-h-screen">
+    <main
+      className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: bgImage ? `url(${bgImage})` : undefined }}
+    >
       <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-sm flex flex-col gap-4">
         <h1 className="text-white text-2xl font-semibold">Entrar</h1>
 

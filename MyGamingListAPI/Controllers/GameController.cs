@@ -28,6 +28,16 @@ namespace MyGamingListAPI.Controllers
             return Ok(game);
         }
 
+        [HttpGet("BackgroundImage")]
+        public async Task<IActionResult> GetBackgroundImage()
+        {
+            var image = await _gameService.GetBackgroundImageAsync();
+
+            if (image == null) return BadRequest();
+
+            return  Ok(image);
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateGameAsync([FromBody] GameCreateDto dto)
