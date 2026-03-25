@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using MyGamingListAPI.Data;
 using MyGamingListAPI.DTOs.Game;
@@ -176,6 +177,28 @@ namespace MyGamingListAPI.Services.Implementations
             }
             catch (Exception ex) {
                 _logger.LogError(ex, "Erro ao excluir jogo id:{Id}", id);
+                throw;
+            }
+        }
+
+        public async Task<string> GetBackgroundImageAsync()
+        {
+            try
+            {
+                var ids = await _context.Games.
+                    Where(g => g.BackgroundImage != null).
+                    Select(g => g.Id).
+                    ToListAsync();
+
+                var randomId = ids[new Random().Next(ids.Count)];
+
+                var game = await _context.Games.FindAsync(randomId);
+
+                return game!.BackgroundImage!;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar BackgroundImage de login.");
                 throw;
             }
         }
