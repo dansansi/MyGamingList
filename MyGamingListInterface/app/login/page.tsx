@@ -78,6 +78,9 @@ export default function LoginPage() {
             Cadastre-se
           </Link>
         </p>
+        <Link href={"/forgot-password"}>
+          <p className="text-white text-sm flex justify-center">Esqueceu a senha?</p>
+        </Link>
       </div>
     </main>
   );
