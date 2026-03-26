@@ -44,7 +44,7 @@ export default function LoginPage() {
       className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: bgImage ? `url(${bgImage})` : undefined }}
     >
-      <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-sm flex flex-col gap-4">
+      <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-sm flex flex-col gap-4 opacity-92">
         <h1 className="text-white text-2xl font-semibold">Entrar</h1>
 
         <input
