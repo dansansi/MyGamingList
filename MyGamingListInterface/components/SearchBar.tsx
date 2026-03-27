@@ -1,14 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Game } from "@/types/game";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Game[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const ref = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (query.length < 2) {
@@ -31,8 +35,23 @@ export default function SearchBar() {
 
     return () => clearTimeout(timer);
   }, [query]);
+
+  useEffect(() => {
+    function clickOutsideHandler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setQuery("");
+      }
+    }
+    document.addEventListener("mousedown", clickOutsideHandler);
+    return () => document.removeEventListener("mousedown", clickOutsideHandler);
+  }, []);
+
+  useEffect(() => {
+    setQuery("");
+  }, [pathname]);
+
   return (
-    <div className="relative w-full max-w-xl">
+    <div ref={ref} className="relative w-full max-w-xl">
       <input
         type="text"
         value={query}
@@ -64,9 +83,7 @@ export default function SearchBar() {
       )}
 
       {isLoading && (
-        <div className="absolute top-full mt-1 w-full bg-zinc-800 rounded-lg px-4 py-2 text-sm text-zinc-400">
-          Buscando...
-        </div>
+        <div className="absolute top-full mt-1 w-full bg-zinc-800 rounded-lg px-4 py-2 text-sm text-zinc-400">Buscando...</div>
       )}
     </div>
   );
