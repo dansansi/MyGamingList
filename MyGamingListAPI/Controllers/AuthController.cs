@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MyGamingListAPI.DTOs.Auth;
 using MyGamingListAPI.Models;
-using MyGamingListAPI.Services.Implementations;
 using MyGamingListAPI.Services.Interfaces;
 using System.Net;
 
@@ -10,11 +9,12 @@ namespace MyGamingListAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController(UserManager<AppUser> userManager, ITokenService tokenService, IEmailService emailService) : ControllerBase
+    public class AuthController(UserManager<AppUser> userManager, ITokenService tokenService, IEmailService emailService, IConfiguration configuration) : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
         private readonly IEmailService _emailService = emailService;
+        private readonly IConfiguration _configuration = configuration;
 
         [HttpPost("register")]
 
@@ -45,7 +45,7 @@ namespace MyGamingListAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            AppUser user;
+            AppUser? user;
 
             if (dto.Login.Contains("@"))
             {
@@ -53,7 +53,7 @@ namespace MyGamingListAPI.Controllers
             }
             else
             {
-                user = await _userManager.FindByNameAsync(dto.Login);
+                user = await _userManager!.FindByNameAsync(dto.Login);
             }
             if (user == null) return Unauthorized("Usuario inválido");
 
@@ -75,11 +75,19 @@ namespace MyGamingListAPI.Controllers
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = WebUtility.UrlEncode(token);
 
-            return Ok(new
-            {
-                email = dto.Email,
-                token = encodedToken
-            });
+            var frontEndUrl = _configuration["FrontEnd:BaseUrl"];
+            var resetLink = $"{frontEndUrl}/reset-password?token={encodedToken}&email={dto.Email}";
+
+            var body = $@"
+            <p>Você solicitou a redefinição de senha.<p>
+            <p><a href='{resetLink}'>Clique aqui para redefinir sua senha.</a></p>
+            <p>Se não foi voce, ignore este e-mail.<p>
+            <small> Este link expira em 1 hora.</small>
+            ";
+
+            await _emailService.SendPasswordRedoEmailAsync(dto.Email, "Redefinição de senha MyGamingList", body);
+
+            return Ok(encodedToken);
         }
 
         [HttpPost("reset-password")]
@@ -89,8 +97,9 @@ namespace MyGamingListAPI.Controllers
             if (user == null) return Ok();
 
             var decodedToken = WebUtility.UrlDecode(dto.Token);
+            var finalToken = decodedToken.Replace(" ", "+");
 
-            var result = await _userManager.ResetPasswordAsync(user, decodedToken, dto.NewPassword);
+            var result = await _userManager.ResetPasswordAsync(user, finalToken, dto.NewPassword);
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             return Ok("Senha redefinida!");
