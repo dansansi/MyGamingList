@@ -41,8 +41,11 @@ export default function LoginPage() {
 
   return (
     <main
-      className="flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: bgImage ? `url(${bgImage})` : undefined }}
+      className="flex flex-1 h-500px items-center justify-center bg-contain bg-center bg-no-repeat"
+      style={{
+        backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+        backgroundSize: "100% 100%"
+      }}
     >
       <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-sm flex flex-col gap-4 opacity-92">
         <h1 className="text-white text-2xl font-semibold">Entrar</h1>
