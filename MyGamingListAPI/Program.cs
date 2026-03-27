@@ -40,7 +40,16 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000").
+        AllowAnyHeader().
+        AllowCredentials().
+        AllowAnyMethod();
+    });
+});
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -103,6 +112,7 @@ if (app.Environment.IsDevelopment())
         c.InjectStylesheet("/SwaggerUi/SwaggerDark.css");
     });
 }
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 

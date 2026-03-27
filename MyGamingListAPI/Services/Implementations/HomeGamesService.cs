@@ -68,7 +68,9 @@ namespace MyGamingListAPI.Services.Implementations
                     BackgroundImage = g.BackgroundImage
                 }).ToList();
 
-                var hotReleases = homeGames.Where(g => g.Type == HomeGameType.HotRelease).Select(g => new HomeGamesDto
+                var hotReleases = homeGames.
+                    Where(g => g.Type == HomeGameType.HotRelease).
+                    Select(g => new HomeGamesDto
                 {
                     ExternalId = g.ExternalId,
                     Name = g.Name,

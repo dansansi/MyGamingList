@@ -87,7 +87,7 @@ namespace MyGamingListAPI.Controllers
 
             await _emailService.SendPasswordRedoEmailAsync(dto.Email, "Redefinição de senha MyGamingList", body);
 
-            return Ok();
+            return Ok(encodedToken);
         }
 
         [HttpPost("reset-password")]
@@ -97,8 +97,9 @@ namespace MyGamingListAPI.Controllers
             if (user == null) return Ok();
 
             var decodedToken = WebUtility.UrlDecode(dto.Token);
+            var finalToken = decodedToken.Replace(" ", "+");
 
-            var result = await _userManager.ResetPasswordAsync(user, decodedToken, dto.NewPassword);
+            var result = await _userManager.ResetPasswordAsync(user, finalToken, dto.NewPassword);
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             return Ok("Senha redefinida!");
