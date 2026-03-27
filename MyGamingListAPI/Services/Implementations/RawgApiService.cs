@@ -46,11 +46,10 @@ namespace MyGamingListAPI.Services.Implementations
         {
             try
             {
-                var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                var tomorrow = DateTime.UtcNow.AddDays(1).ToString("yyyy-MM-dd");
                 var futureDate = DateTime.UtcNow.AddMonths(1).ToString("yyyy-MM-dd");
 
-                var upcomingUrl = $"games?key={_apiKey}&dates={today},{futureDate}&ordering=released&page-size=15";
-
+                var upcomingUrl = $"games?key={_apiKey}&dates={tomorrow},{futureDate}&ordering=released&page-size=20";
                 var upcoming =  await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(upcomingUrl, cancellationToken);
 
                 return upcoming!.Results ?? new List<RawgGameDto>();
@@ -69,7 +68,7 @@ namespace MyGamingListAPI.Services.Implementations
                 var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
                 var pastDate = DateTime.UtcNow.AddMonths(-1).ToString("yyyy-MM-dd");
 
-                var hotReleasesUrl = $"games?key={_apiKey}&dates={pastDate},{today}&ordering=released&page-size=15";
+                var hotReleasesUrl = $"games?key={_apiKey}&dates={pastDate},{today}&ordering=-released&page-size=20";
 
                 var hotReleases = await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(hotReleasesUrl, cancellationToken);
 
