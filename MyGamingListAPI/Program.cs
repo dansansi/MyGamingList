@@ -98,6 +98,23 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!))
     };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            context.Token = context.Request.Cookies["token"];
+            Console.WriteLine(context.Token);
+            return Task.CompletedTask;
+
+
+        },
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine("Auth failed: " + context.Exception.Message);
+            return Task.CompletedTask;
+        }
+    };
 }); 
 
 var app = builder.Build();
