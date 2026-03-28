@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -19,7 +19,6 @@ export default function LoginPage() {
     getBackgroundImage();
   }, []);
 
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   async function handleSubmit() {
@@ -36,7 +35,7 @@ export default function LoginPage() {
       return;
     }
     const redirect = searchParams.get("redirect") || "/";
-    router.push(redirect);
+    window.location.href = redirect;
   }
 
   return (
@@ -44,7 +43,7 @@ export default function LoginPage() {
       className="flex flex-1 h-500px items-center justify-center bg-contain bg-center bg-no-repeat"
       style={{
         backgroundImage: bgImage ? `url(${bgImage})` : undefined,
-        backgroundSize: "100% 100%"
+        backgroundSize: "100% 100%",
       }}
     >
       <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-sm flex flex-col gap-4 opacity-92">
@@ -55,6 +54,9 @@ export default function LoginPage() {
           placeholder="Username ou Email"
           value={login}
           onChange={(e) => setLogin(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSubmit();
+          }}
           className="bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-zinc-500"
         />
 
@@ -63,6 +65,9 @@ export default function LoginPage() {
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSubmit();
+          }}
           className="bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-zinc-500"
         />
 
