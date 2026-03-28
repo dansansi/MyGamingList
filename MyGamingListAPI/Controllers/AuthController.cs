@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyGamingListAPI.DTOs.Auth;
 using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Interfaces;
 using System.Net;
+using System.Security.Claims;
 
 namespace MyGamingListAPI.Controllers
 {
@@ -103,6 +105,20 @@ namespace MyGamingListAPI.Controllers
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             return Ok("Senha redefinida!");
+        }
+
+        [HttpGet("currentUser")]
+        [Authorize]
+        public IActionResult GetCurrentUser() {
+
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            if (username == null || email == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new { username, email});
         }
     }
 }

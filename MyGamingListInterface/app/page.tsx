@@ -14,7 +14,7 @@ interface HomeGamesResponse {
 
 async function getUpcomingAndNewGames(): Promise<HomeGamesResponse> {
   const res = await fetch("http://localhost:5195/api/HomeGames", {
-    next: { revalidate: 20 },
+    next: { revalidate: 2000 },
   });
   if (!res.ok) throw new Error("Erro ao buscar jogos da home");
   return res.json();
