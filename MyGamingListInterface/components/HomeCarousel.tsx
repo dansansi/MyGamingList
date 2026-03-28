@@ -17,12 +17,7 @@ interface HomeCarouselProps {
   storageKey: string;
 }
 
-export default function HomeCarousel({
-  title,
-  games,
-  gradientClass,
-  storageKey,
-}: HomeCarouselProps) {
+export default function HomeCarousel({ title, games, gradientClass, storageKey }: HomeCarouselProps) {
   const [isVisible, setIsVisible] = useState(() => {
     if (typeof window === "undefined") return true;
     const saved = localStorage.getItem(storageKey);
@@ -46,14 +41,9 @@ export default function HomeCarousel({
 
   return (
     <div className="mb-6">
-      <div
-        className={`flex items-center justify-between px-4 py-2 rounded-t-lg ${gradientClass}`}
-      >
+      <div className={`flex items-center justify-between px-4 py-2 rounded-t-lg ${gradientClass}`}>
         <h2 className="text-white font-bold text-lg">{title}</h2>
-        <button
-          onClick={toggleVisibility}
-          className="text-white/60 hover:text-white text-xs transition-colors duration-200"
-        >
+        <button onClick={toggleVisibility} className="text-white/60 hover:text-white text-xs transition-colors duration-200">
           {isVisible ? "▲ Recolher" : "▼ Expandir"}
         </button>
       </div>
