@@ -8,12 +8,7 @@ interface CarouselCardProps {
   externalId: number;
 }
 
-export default function CarouselCard({
-  name,
-  releaseDate,
-  backgroundImage,
-  externalId,
-}: CarouselCardProps) {
+export default function CarouselCard({ name, releaseDate, backgroundImage, externalId }: CarouselCardProps) {
   const formatDate = releaseDate
     ? new Date(releaseDate).toLocaleDateString("pt-BR", {
         day: "2-digit",
@@ -26,12 +21,7 @@ export default function CarouselCard({
     <Link href={`/games/${externalId}`}>
       <div className="flex-shrink-0 w-62 rounded-lg overflow-hidden bg-zinc-800 hover:scale-105 transition-transform duration-200">
         <div className="relative w-full h-36">
-          <Image
-            src={backgroundImage || "/assets/placeholder.jpg"}
-            alt={`Foto do jogo + ${name}`}
-            fill
-            className="object-contain"
-          />
+          <Image src={backgroundImage || "/assets/gameNotFound1.jpg"} alt={`Foto do jogo + ${name}`} fill />
         </div>
         <div className="p-2">
           <p className="text-white text-xs font-medium truncate">{name}</p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CarouselCard from "@/components/CarouselCard";
 
 interface Game {
@@ -18,11 +18,15 @@ interface HomeCarouselProps {
 }
 
 export default function HomeCarousel({ title, games, gradientClass, storageKey }: HomeCarouselProps) {
-  const [isVisible, setIsVisible] = useState(() => {
-    if (typeof window === "undefined") return true;
-    const saved = localStorage.getItem(storageKey);
-    return saved !== null ? saved === "true" : true;
-  });
+  const [isVisible, setIsVisible] = useState(true);
+  const storageKeyRef = useRef(storageKey);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(storageKeyRef.current);
+    if (saved !== null) {
+      setIsVisible(saved === "true");
+    }
+  }, []);
 
   const scrollref = useRef<HTMLDivElement>(null);
 
