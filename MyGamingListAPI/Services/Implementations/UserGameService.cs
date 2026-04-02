@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using MyGamingListAPI.Data;
 using MyGamingListAPI.DTOs.UserGame;
 using MyGamingListAPI.Models;
@@ -79,6 +80,31 @@ namespace MyGamingListAPI.Services.Implementations
                 _logger.LogError(ex, "Erro ao buscar lista de jogos do usuario {UserId}", userId);
                 throw;
             }
+        }
+
+        public async Task<UserGameStatusResponseDto?> GetGameStatusAsync(string username, int externalId)
+        {
+            try
+            {
+                var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == username);
+                if (user == null) return null;
+
+                var game = await _dbContext.Games.FirstOrDefaultAsync(g => g.ExternalId == externalId);
+
+                var gameStatus = await _dbContext.UserGames.FirstOrDefaultAsync(ug => ug.GameId == game.Id && ug.UserId.Equals(user.Id));
+                return new UserGameStatusResponseDto
+                {
+                    Status = gameStatus?.Status,
+                    Favorite = gameStatus?.IsFavorite ?? false
+                };
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar info de status de jogo");
+                throw;
+            }
+            
         }
 
         public async Task<bool> RemoveGameFromUserListAsync(string userId, int externalId)

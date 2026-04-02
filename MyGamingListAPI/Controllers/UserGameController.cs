@@ -25,6 +25,17 @@ namespace MyGamingListAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{externalId}")]
+        [Authorize(Roles = "User,Admin")]
+        public async Task<IActionResult> GetGameStatus([FromRoute] int externalId)
+        {
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            if (userName == null) return Unauthorized();
+
+            var userStatus = await _userGameService.GetGameStatusAsync(userName, externalId);
+            return Ok(userStatus);
+        }
+
         [HttpPost]
         [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> AddOrUpdateGame([FromBody] UserGameRequestDto dto)
@@ -38,7 +49,7 @@ namespace MyGamingListAPI.Controllers
         
         [HttpDelete("{externalId}")]
         [Authorize(Roles = "User,Admin")]
-        public async Task<IActionResult> DeleteGame([FromQuery] int externalId)
+        public async Task<IActionResult> DeleteGame([FromRoute] int externalId)
         {
             var userId = GetUserId();
             if (userId == null) return Unauthorized();
