@@ -90,12 +90,17 @@ namespace MyGamingListAPI.Services.Implementations
                 if (user == null) return null;
 
                 var game = await _dbContext.Games.FirstOrDefaultAsync(g => g.ExternalId == externalId);
+                if (game == null) return new UserGameStatusResponseDto
+                {
+                    Status = null,
+                    IsFavorite = false
+                };
 
                 var gameStatus = await _dbContext.UserGames.FirstOrDefaultAsync(ug => ug.GameId == game.Id && ug.UserId.Equals(user.Id));
                 return new UserGameStatusResponseDto
                 {
                     Status = gameStatus?.Status,
-                    Favorite = gameStatus?.IsFavorite ?? false
+                    IsFavorite = gameStatus?.IsFavorite ?? false
                 };
 
             }

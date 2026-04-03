@@ -6,9 +6,9 @@
         public AppUser User { get; set; } = null!;
         public int GameId { get; set; }
         public Game Game { get; set; } = null!;
-        public GameStatus Status { get; set; }
+        public GameStatus? Status { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public bool IsFavorite { get; set; } = false;
+        public bool? IsFavorite { get; set; } = false;
     }
 
     public enum GameStatus

@@ -13,18 +13,19 @@ const STATUS_LABELS: Record<string, string> = {
   [GameStatus.Dropped]: "Dropped",
 };
 
-// Mock — depois vem do backend
-const MOCK_IS_FAVORITE = false;
-const MOCK_STATUS = "";
+interface GameActionProps {
+  isLoggedIn: boolean;
+  initialFavorite: boolean;
+  initialStatus: string;
+  gameId: number;
+}
 
-export default function GameActions() {
+export default function GameActions({ isLoggedIn, initialFavorite, initialStatus, gameId }: GameActionProps) {
   const router = useRouter();
-  const isLoggedIn = false; // depois vira useAuth() ou cookie check
 
-  const [isFavorite, setIsFavorite] = useState(MOCK_IS_FAVORITE);
-  const [currentStatus, setCurrentStatus] = useState<string>(MOCK_STATUS);
+  const [isFavorite, setIsFavorite] = useState(initialFavorite);
+  const [currentStatus, setCurrentStatus] = useState<string>(initialStatus);
   const [pendingStatus, setPendingStatus] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   function showToast(msg: string) {
@@ -32,13 +33,31 @@ export default function GameActions() {
     setTimeout(() => setToast(null), 3000);
   }
 
-  function handleFavoriteClick() {
+  async function handleFavoriteClick() {
     if (!isLoggedIn) {
       router.push("/login");
       return;
     }
-    // TODO: chamar API de toggle favorite
-    setIsFavorite((prev) => !prev);
+    const newFavorite = !isFavorite;
+    const response = await fetch(`/api/userGame/`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        externalId: gameId,
+        status: currentStatus === "" ? null : Number(currentStatus),
+        isFavorite: newFavorite,
+      }),
+    });
+
+    if (!response.ok) {
+      showToast("Erro ao atualizar favorito");
+    } else {
+      if (newFavorite == true) showToast("Adicionado a lista de favoritos");
+      else {
+        showToast("Removido da lista de favoritos");
+      }
+      setIsFavorite(newFavorite);
+    }
   }
 
   function handleStatusChange(value: string) {
@@ -48,7 +67,6 @@ export default function GameActions() {
     }
     if (value === currentStatus) return;
     setPendingStatus(value);
-    setShowModal(true);
   }
 
   function handleConfirmStatus() {
@@ -56,13 +74,7 @@ export default function GameActions() {
     // TODO: chamar API de status
     setCurrentStatus(pendingStatus);
     setPendingStatus(null);
-    setShowModal(false);
     showToast("Lista atualizada com sucesso!");
-  }
-
-  function handleCancelStatus() {
-    setPendingStatus(null);
-    setShowModal(false);
   }
 
   const pendingLabel = pendingStatus !== null ? (STATUS_LABELS[pendingStatus] ?? pendingStatus) : "";
@@ -70,7 +82,6 @@ export default function GameActions() {
   return (
     <>
       <div className="flex items-center gap-3 shrink-0">
-        {/* Dropdown de status */}
         <select
           value={currentStatus}
           onChange={(e) => handleStatusChange(e.target.value)}
@@ -83,10 +94,9 @@ export default function GameActions() {
           ))}
         </select>
 
-        {/* Estrela de favorito */}
         <button
           onClick={handleFavoriteClick}
-          className="text-2xl transition-transform hover:scale-110 focus:outline-none"
+          className="text-3xl transition-transform hover:scale-110 focus:outline-none"
           aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
         >
           {isFavorite ? (
@@ -95,32 +105,15 @@ export default function GameActions() {
             <span className="text-zinc-500 hover:text-yellow-400 transition-colors">☆</span>
           )}
         </button>
+        <button
+          onClick={handleFavoriteClick}
+          className="text-3xl transition-transform hover:scale-110 focus:outline-none"
+          aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+        >
+          <span className="text-yellow-400">Salvar</span>
+        </button>
       </div>
 
-      {/* Modal de confirmação */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="bg-zinc-800 border border-zinc-700 rounded-xl p-6 w-full max-w-sm shadow-xl">
-            <h2 className="text-white font-semibold text-lg mb-2">Alterar status</h2>
-            <p className="text-zinc-400 text-sm mb-6">
-              Deseja mover este jogo para <span className="text-white font-medium">{pendingLabel}</span>?
-            </p>
-            <div className="flex gap-3 justify-end">
-              <button onClick={handleCancelStatus} className="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors">
-                Cancelar
-              </button>
-              <button
-                onClick={handleConfirmStatus}
-                className="px-4 py-2 text-sm bg-zinc-600 hover:bg-zinc-500 text-white rounded-md transition-colors"
-              >
-                Confirmar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Toast */}
       {toast && (
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-700 border border-zinc-600 text-white text-sm px-5 py-3 rounded-lg shadow-lg animate-fade-in">
           {toast}

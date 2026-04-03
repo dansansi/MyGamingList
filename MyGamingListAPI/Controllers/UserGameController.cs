@@ -32,7 +32,9 @@ namespace MyGamingListAPI.Controllers
             var userName = User.FindFirstValue(ClaimTypes.Name);
             if (userName == null) return Unauthorized();
 
+
             var userStatus = await _userGameService.GetGameStatusAsync(userName, externalId);
+
             return Ok(userStatus);
         }
 

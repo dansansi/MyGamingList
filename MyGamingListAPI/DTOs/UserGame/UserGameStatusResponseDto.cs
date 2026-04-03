@@ -5,6 +5,6 @@ namespace MyGamingListAPI.DTOs.UserGame
     public class UserGameStatusResponseDto
     {
         public GameStatus? Status { get; set; }
-        public bool? Favorite { get; set; }
+        public bool? IsFavorite { get; set; } = false;
     }
 }
