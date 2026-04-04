@@ -2,9 +2,8 @@
 
 namespace MyGamingListAPI.DTOs.UserGame
 {
-    public class UserGameRequestDto
+    public class UserGameStatusResponseDto
     {
-        public int ExternalId { get; set; }
         public GameStatus? Status { get; set; }
         public bool? IsFavorite { get; set; } = false;
     }

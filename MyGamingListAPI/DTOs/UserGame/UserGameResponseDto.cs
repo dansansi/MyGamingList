@@ -6,8 +6,8 @@ namespace MyGamingListAPI.DTOs.UserGame
     {
         public int ExternalId { get; set; }
         public string GameName { get; set; } = null!;
-        public GameStatus Status { get; set; }
-        public bool IsFavorite { get; set; }
+        public GameStatus? Status { get; set; }
+        public bool? IsFavorite { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }
