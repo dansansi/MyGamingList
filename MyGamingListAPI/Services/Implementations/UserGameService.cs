@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MyGamingListAPI.Data;
 using MyGamingListAPI.DTOs.UserGame;
 using MyGamingListAPI.Models;
