@@ -71,7 +71,7 @@ export default function GameActions({ isLoggedIn, initialFavorite, initialStatus
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         externalId: gameId,
-        status: currentStatus === "" ? null : Number(newStatus),
+        status: newStatus === "" ? null : Number(newStatus),
         isFavorite: isFavorite,
       }),
     });
