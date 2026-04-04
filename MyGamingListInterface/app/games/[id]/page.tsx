@@ -48,8 +48,8 @@ export default async function GamePage({ params }: Props) {
           <h1 className="text-3xl pt-4 font-semibold text-white">{game.name}</h1>
           <GameActions
             isLoggedIn={isLoggedIn}
-            initialFavorite={userGame.isFavorite ?? false}
-            initialStatus={userGame.status ?? ""}
+            initialFavorite={userGame?.isFavorite ?? false}
+            initialStatus={userGame?.status ?? ""}
             gameId={Number(id)}
           />
         </div>

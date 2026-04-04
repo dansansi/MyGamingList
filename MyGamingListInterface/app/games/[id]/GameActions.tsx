@@ -34,7 +34,7 @@ export default function GameActions({ isLoggedIn, initialFavorite, initialStatus
 
   async function handleFavoriteClick() {
     if (!isLoggedIn) {
-      router.push("/login");
+      router.push(`/login?redirect=/games/${gameId}`);
       return;
     }
     const newFavorite = !isFavorite;
@@ -61,7 +61,7 @@ export default function GameActions({ isLoggedIn, initialFavorite, initialStatus
 
   async function handleStatusChange(newStatus: string) {
     if (!isLoggedIn) {
-      router.push("/login");
+      router.push(`/login?redirect=/games/${gameId}`);
       return;
     }
     if (newStatus === currentStatus) return;
