@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { GameStatus } from "@/types/userGame";
 
-const STATUS_LABELS: Record<string, string> = {
+const Status_Labels: Record<string, string> = {
   "": "Selecione",
   [GameStatus.Wishlist]: "Wishlist",
   [GameStatus.Playing]: "Playing",
@@ -25,7 +25,6 @@ export default function GameActions({ isLoggedIn, initialFavorite, initialStatus
 
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
   const [currentStatus, setCurrentStatus] = useState<string>(initialStatus);
-  const [pendingStatus, setPendingStatus] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
   function showToast(msg: string) {
@@ -60,34 +59,40 @@ export default function GameActions({ isLoggedIn, initialFavorite, initialStatus
     }
   }
 
-  function handleStatusChange(value: string) {
+  async function handleStatusChange(newStatus: string) {
     if (!isLoggedIn) {
       router.push("/login");
       return;
     }
-    if (value === currentStatus) return;
-    setPendingStatus(value);
-  }
+    if (newStatus === currentStatus) return;
 
-  function handleConfirmStatus() {
-    if (pendingStatus === null) return;
-    // TODO: chamar API de status
-    setCurrentStatus(pendingStatus);
-    setPendingStatus(null);
-    showToast("Lista atualizada com sucesso!");
-  }
+    const response = await fetch(`/api/userGame/`, {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        externalId: gameId,
+        status: currentStatus === "" ? null : Number(newStatus),
+        isFavorite: isFavorite,
+      }),
+    });
 
-  const pendingLabel = pendingStatus !== null ? (STATUS_LABELS[pendingStatus] ?? pendingStatus) : "";
+    if (!response.ok) {
+      showToast("Erro ao atualizar status do jogo");
+    } else {
+      setCurrentStatus(newStatus);
+      showToast("Status de jogo atualizado.");
+    }
+  }
 
   return (
-    <>
+    <div>
       <div className="flex items-center gap-3 shrink-0">
         <select
           value={currentStatus}
           onChange={(e) => handleStatusChange(e.target.value)}
           className="bg-zinc-800 border border-zinc-600 text-zinc-200 text-sm rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500 cursor-pointer"
         >
-          {Object.entries(STATUS_LABELS).map(([value, label]) => (
+          {Object.entries(Status_Labels).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
             </option>
@@ -105,13 +110,6 @@ export default function GameActions({ isLoggedIn, initialFavorite, initialStatus
             <span className="text-zinc-500 hover:text-yellow-400 transition-colors">☆</span>
           )}
         </button>
-        <button
-          onClick={handleFavoriteClick}
-          className="text-3xl transition-transform hover:scale-110 focus:outline-none"
-          aria-label={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-        >
-          <span className="text-yellow-400">Salvar</span>
-        </button>
       </div>
 
       {toast && (
@@ -119,6 +117,6 @@ export default function GameActions({ isLoggedIn, initialFavorite, initialStatus
           {toast}
         </div>
       )}
-    </>
+    </div>
   );
 }
