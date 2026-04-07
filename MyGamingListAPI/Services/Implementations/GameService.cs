@@ -22,7 +22,7 @@ namespace MyGamingListAPI.Services.Implementations
                 var game = new Game
                 {
                     ExternalId = dto.ExternalId,
-                    Name = dto.Name,
+                    Name = dto.Name!,
                     Description = dto.Description,
                     Slug = dto.Slug,
                     Tba = dto.Tba,
@@ -145,7 +145,7 @@ namespace MyGamingListAPI.Services.Implementations
                 var game = await _context.Games.FindAsync(id);
                 if (game == null) return null;
 
-                game.Name = dto.Name;
+                game.Name = dto.Name!;
 
                 await _context.SaveChangesAsync();
 

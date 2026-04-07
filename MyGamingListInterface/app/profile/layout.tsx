@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Login",
+  title: "Profile",
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
