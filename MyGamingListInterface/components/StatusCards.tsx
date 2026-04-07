@@ -34,7 +34,13 @@ export default function StatusCards({ games }: Props) {
     href: "/list?sort=favorites",
   };
 
-  const allCards = [...cards, favoritesCard];
+  const noFilterCard: StatusCard = {
+    label: "All your added games",
+    count: games.length,
+    href: "/list",
+  };
+
+  const allCards = [noFilterCard, ...cards, favoritesCard];
 
   return (
     <div className="grid grid-cols-3 gap-4">
