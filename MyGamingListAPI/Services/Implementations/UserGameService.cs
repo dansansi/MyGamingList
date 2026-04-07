@@ -63,7 +63,6 @@ namespace MyGamingListAPI.Services.Implementations
             {
                 var game = await _dbContext.UserGames
                 .Where(ug => ug.UserId == userId)
-                .Include(ug => ug.Game)
                 .Select(ug => new UserGameResponseDto
                 {
                     ExternalId = ug.Game.ExternalId,
@@ -71,6 +70,7 @@ namespace MyGamingListAPI.Services.Implementations
                     Status = ug.Status,
                     IsFavorite = ug.IsFavorite,
                     CreatedAt = ug.CreatedAt,
+                    BackgroundImage = ug.Game.BackgroundImage
                 }).AsNoTracking().ToListAsync();
                 return game;
             }

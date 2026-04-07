@@ -9,5 +9,7 @@ namespace MyGamingListAPI.DTOs.UserGame
         public GameStatus? Status { get; set; }
         public bool? IsFavorite { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public string? BackgroundImage { get; set; }
     }
 }
