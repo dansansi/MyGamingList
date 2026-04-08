@@ -18,3 +18,33 @@ export async function POST(request: Request) {
   const data = await response.json();
   return Response.json(data, { status: response.status });
 }
+
+export async function GET() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  const res = await fetch(`http://localhost:5195/api/UserGame`, {
+    headers: { Cookie: `token=${token}` },
+    cache: "no-store",
+  });
+
+  if (!res.ok) return Response.json([], { status: res.status });
+  const data = await res.json();
+  return Response.json(data);
+}
+
+export async function DELETE(request: Request, { params }: { params: { externalId: string } }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  const { externalId } = params;
+
+  console.log("DELETE chamado, externalId:", externalId);
+  console.log("token:", token);
+
+  const res = await fetch(`http://localhost:5195/api/UserGame/${externalId}`, {
+    method: "DELETE",
+    headers: { Cookie: `token=${token}` },
+  });
+  console.log("status do backend:", res.status);
+  return new Response(null, { status: res.status });
+}

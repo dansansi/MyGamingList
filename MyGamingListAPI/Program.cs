@@ -104,14 +104,12 @@ builder.Services.AddAuthentication(options =>
         OnMessageReceived = context =>
         {
             context.Token = context.Request.Cookies["token"];
-            Console.WriteLine(context.Token);
             return Task.CompletedTask;
 
 
         },
         OnAuthenticationFailed = context =>
         {
-            Console.WriteLine("Auth failed: " + context.Exception.Message);
             return Task.CompletedTask;
         }
     };
