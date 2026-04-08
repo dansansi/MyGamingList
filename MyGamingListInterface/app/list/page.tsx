@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { GameStatus } from "@/types/userGame";
 import GameListCard from "@/components/GameListCard";
+import router from "next/router";
 
 interface UserGame {
   externalId: number;
@@ -24,7 +25,7 @@ export default function ListPage() {
   useEffect(() => {
     async function fetchGames() {
       const res = await fetch("api/userGame");
-      if (res.ok) return;
+      if (!res.ok) return;
       const data: UserGame[] = await res.json();
       setGames(data);
       setLoading(false);
@@ -63,7 +64,7 @@ export default function ListPage() {
   }
 
   return (
-    <div className="min-h-[calc-(100vh-64px)] bg-zinc-900 py-8">
+    <div className="min-h-[calc(100vh-64px)] bg-zinc-900 py-8">
       <div className="flex flex-col items-center gap-3">
         {filteredGames.length === 0 ? (
           <p className="text-zinc-400 mt-16">Nenhum jogo encontrado</p>

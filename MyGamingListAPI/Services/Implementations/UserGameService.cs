@@ -38,6 +38,19 @@ namespace MyGamingListAPI.Services.Implementations
                 {
                     userGame.Status = dto.Status;
                     userGame.IsFavorite = dto.IsFavorite;
+
+                    if (dto.Status == null && dto.IsFavorite == false)
+                    {
+                        await RemoveGameFromUserListAsync(userId, dto.ExternalId);
+                        return new UserGameResponseDto
+                        {
+                            ExternalId = dto.ExternalId,
+                            GameName = game!.Name,
+                            Status = null,
+                            IsFavorite = false,
+                            CreatedAt = userGame.CreatedAt,
+                        }; ;
+                    }
                     _logger.LogInformation("Jogo {Game} teve o status atualizado na lista do usuario {UserId}",game!.Name, userId);
                 }
                 await _dbContext.SaveChangesAsync();
