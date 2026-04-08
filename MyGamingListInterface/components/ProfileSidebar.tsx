@@ -27,7 +27,7 @@ export default function ProfileSidebar({ user, games }: Props) {
 
       <div className="flex flex-col gap-2 text-sm">
         <div className="flex justify-between items-center">
-          <span className="text-zinc-400">Todos os jogos</span>
+          <span className="text-zinc-400">All games</span>
           <div className="flex items-center gap-2">
             <span className="text-white font-medium">{totalGames}</span>
             <div className="relative group">
@@ -35,14 +35,14 @@ export default function ProfileSidebar({ user, games }: Props) {
                 ?
               </span>
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-zinc-700 text-zinc-200 text-xs rounded px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                Total de jogos adicionados, com ou sem status, favoritados ou não.
+                All added games, having status or not, favorited or not.
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex justify-between items-center">
-          <span className="text-zinc-400">Jogos na lista</span>
+          <span className="text-zinc-400">Games on the list</span>
           <div className="flex items-center gap-2">
             <span className="text-white font-medium">{totalStatusGames}</span>
             <div className="relative group">
@@ -50,14 +50,14 @@ export default function ProfileSidebar({ user, games }: Props) {
                 ?
               </span>
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-zinc-700 text-zinc-200 text-xs rounded px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                Jogos com algum status definido na sua lista.
+                Games with some status defined, regardless of favorite.
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex justify-between items-center">
-          <span className="text-zinc-400">Favoritos</span>
+          <span className="text-zinc-400">Favorites</span>
           <div className="flex items-center gap-2">
             <span className="text-white font-medium">{totalFavorites}</span>
             <div className="relative group">
@@ -65,7 +65,7 @@ export default function ProfileSidebar({ user, games }: Props) {
                 ?
               </span>
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-zinc-700 text-zinc-200 text-xs rounded px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                Total de jogos marcados como favoritos.
+                Favorited games, regardless of status.
               </div>
             </div>
           </div>

@@ -26,7 +26,7 @@ export default async function Header() {
           <UserMenu username={user.username} />
         ) : (
           <Link href="/login" className="text-zinc-300 hover:text-white text-sm">
-            Entrar
+            Log in
           </Link>
         )}
       </nav>
