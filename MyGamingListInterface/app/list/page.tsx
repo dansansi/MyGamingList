@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { GameStatus } from "@/types/userGame";
 import GameListCard from "@/components/GameListCard";
-import router from "next/router";
 
 interface UserGame {
   externalId: number;
@@ -21,7 +20,7 @@ export default function ListPage() {
 
   const [games, setGames] = useState<UserGame[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [toast, setToast] = useState<string | null>(null);
   useEffect(() => {
     async function fetchGames() {
       const res = await fetch("api/userGame");
@@ -32,6 +31,11 @@ export default function ListPage() {
     }
     fetchGames();
   }, []);
+
+  function showToast(msg: string) {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3000);
+  }
 
   function filterAndSort(games: UserGame[]): UserGame[] {
     let filtered = [...games];
@@ -49,8 +53,9 @@ export default function ListPage() {
     return filtered.sort((a, b) => a.gameName.localeCompare(b.gameName));
   }
 
-  function handleRemove(externalId: number) {
+  function PageHandleRemove(externalId: number, gameName: string) {
     setGames((prev) => prev.filter((g) => g.externalId !== externalId));
+    showToast(`${gameName} removido`);
   }
 
   const filteredGames = filterAndSort(games);
@@ -69,9 +74,14 @@ export default function ListPage() {
         {filteredGames.length === 0 ? (
           <p className="text-zinc-400 mt-16">Nenhum jogo encontrado</p>
         ) : (
-          filteredGames.map((game) => <GameListCard key={game.externalId} game={game} onRemove={handleRemove} />)
+          filteredGames.map((game) => <GameListCard key={game.externalId} game={game} onRemove={PageHandleRemove} />)
         )}
       </div>
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-700 border border-zinc-600 text-white text-sm px-5 py-3 rounded-lg shadow-lg">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

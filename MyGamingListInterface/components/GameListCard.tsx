@@ -14,7 +14,7 @@ interface UserGame {
 
 interface Props {
   game: UserGame;
-  onRemove: (externalId: number) => void;
+  onRemove: (externalId: number, gameName: string) => void;
 }
 
 const Status_List: Record<string, string> = {
@@ -86,7 +86,7 @@ export default function GameListCard({ game, onRemove }: Props) {
     if (!response.ok) {
       showToast("Erro ao remover jogo");
     } else {
-      onRemove(game.externalId);
+      onRemove(game.externalId, game.gameName);
     }
   }
 
