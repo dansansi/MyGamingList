@@ -16,7 +16,7 @@ namespace MyGamingListAPI.Jobs
                 {
                     using var scope = _scopeFactory.CreateScope();
                     var homeGamesService = scope.ServiceProvider.GetRequiredService<IHomeGamesService>();
-                    await homeGamesService.SyncHomeGamesAsync(stoppingToken);
+                    await homeGamesService.SyncHomeGamesToDbAsync(stoppingToken);
 
                     _logger.LogInformation("Busca concluida");
                 }
@@ -26,7 +26,7 @@ namespace MyGamingListAPI.Jobs
                     throw;
                 }
 
-                await Task.Delay(TimeSpan.FromHours(24), stoppingToken);
+                await Task.Delay(TimeSpan.FromHours(6), stoppingToken);
             }
         }
 

@@ -4,12 +4,6 @@
     {
         public List<RawgGameDto>? Results { get; set; }
     }
-
-    public class RawgPlatformDto
-    {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-    }
     public class RawgGameDto
     {
         public int Id { get; set; }

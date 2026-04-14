@@ -81,7 +81,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
         }
 
-        public async Task<List<RawgGameDto>> GetRandomGamesAsync(CancellationToken cancellationToken = default)
+        public async Task<List<RawgGameDto>> GetRandomGamesFromApiAsync(CancellationToken cancellationToken = default)
         {
             try
             {

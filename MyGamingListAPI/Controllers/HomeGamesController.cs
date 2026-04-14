@@ -14,7 +14,7 @@ namespace MyGamingListAPI.Controllers
         {
             try
             {
-                var games = await _homeGamesService.GetHomeGamesAsync();
+                var games = await _homeGamesService.GetNewHomeGamesAsync();
 
                 if (games == null) return NotFound();
 
@@ -25,6 +25,21 @@ namespace MyGamingListAPI.Controllers
                 return BadRequest();
             }
 
+        }
+
+        [HttpGet("random-games")]
+        public async Task<IActionResult> GetRandomHomeGames(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var games = await _homeGamesService.GetRandomHomeGamesAsync(cancellationToken);
+                if (games == null || games.Count == 0) return NotFound();
+                return Ok(games);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

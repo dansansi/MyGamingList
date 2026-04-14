@@ -95,19 +95,16 @@ export default function GameListCard({ game, onRemove }: Props) {
       className="relative w-[900px] h-[170px] rounded-lg overflow-hidden cursor-pointer shrink-0"
       onClick={() => router.push(`/games/${game.externalId}`)}
     >
-      {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: game.backgroundImage ? `url(${game.backgroundImage})` : undefined,
-          backgroundColor: game.backgroundImage ? undefined : "#27272a",
+          backgroundImage: game.backgroundImage ? `url(${game.backgroundImage})` : `url("/assets/ImageNotFound.jpg")`,
+          backgroundColor: undefined,
         }}
       />
 
-      {/* Overlay escuro */}
       <div className="absolute inset-0 bg-black/70" />
 
-      {/* Conteudo */}
       <div className="relative z-10 flex items-center justify-between h-full px-6">
         <span className="text-white font-semibold text-lg cursor-pointer hover:underline">{game.gameName}</span>
 

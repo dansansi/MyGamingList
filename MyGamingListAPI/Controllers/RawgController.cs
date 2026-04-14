@@ -38,7 +38,7 @@ namespace MyGamingListAPI.Controllers
         [HttpGet("random-games")]
         public async Task<IActionResult> GetRandomGames(CancellationToken cancellationToken = default)
         {
-            var games = await _rawgApiService.GetRandomGamesAsync(cancellationToken);
+            var games = await _rawgApiService.GetRandomGamesFromApiAsync(cancellationToken);
             return Ok(games);
         }
     }
