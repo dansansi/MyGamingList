@@ -1,4 +1,4 @@
-import HomeCarousel from "@/components/HomeCarousel";
+import HomeCarousel from "@/components/HomePage/HomeCarousel";
 
 interface Game {
   externalId: number;

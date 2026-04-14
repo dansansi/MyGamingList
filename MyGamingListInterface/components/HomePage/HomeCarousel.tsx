@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import CarouselCard from "@/components/CarouselCard";
+import GameCard from "@/components/HomePage/GameCard";
 
 interface Game {
   name: string;
@@ -61,7 +61,7 @@ export default function HomeCarousel({ title, games, gradientClass, storageKey }
           className="flex gap-6 overflow-x-auto px-4 py-3 bg-zinc-800/50 rounded-b-lg scrollbar-hide opacity-100"
         >
           {games.map((game) => (
-            <CarouselCard
+            <GameCard
               key={game.externalId}
               {...game} //spreading
               //   externalId={game.externalId}

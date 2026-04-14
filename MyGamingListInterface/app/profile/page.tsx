@@ -1,5 +1,5 @@
-import ProfileSidebar from "@/components/ProfileSidebar";
-import StatusCards from "@/components/StatusCards";
+import ProfileSidebar from "@/components/ProfilePage/ProfileSidebar";
+import StatusCards from "@/components/ProfilePage/StatusCards";
 import { cookies } from "next/headers";
 
 async function getCurrentUser() {
