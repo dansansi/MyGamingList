@@ -11,7 +11,7 @@ interface GameCardProps {
   name: string;
   backgroundImage: string;
   releaseDate?: string;
-  showActions?: boolean;
+  showActions: boolean;
   isLoggedIn?: boolean;
   initialFavorite?: boolean;
   initialStatus?: string;
@@ -29,7 +29,7 @@ export default function GameCard({
 }: GameCardProps) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
-  const [isCompleted, setIsCompleted] = useState(initialStatus === String(GameStatus.Completed));
+  const [isCompleted, setIsCompleted] = useState(initialStatus);
   const [toast, setToast] = useState<string | null>(null);
 
   const formattedDate = releaseDate
@@ -52,7 +52,7 @@ export default function GameCard({
       return;
     }
     const newFavorite = !isFavorite;
-    const response = await fetch("/api/userGame/", {
+    const response = await fetch("/api/userGame", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -61,6 +61,7 @@ export default function GameCard({
         isFavorite: newFavorite,
       }),
     });
+
     if (!response.ok) {
       showToast("Erro ao atualizar favorito");
     } else {
@@ -76,7 +77,7 @@ export default function GameCard({
       return;
     }
     const newCompleted = !isCompleted;
-    const response = await fetch("/api/userGame/", {
+    const response = await fetch("/api/userGame", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -85,10 +86,9 @@ export default function GameCard({
         isFavorite,
       }),
     });
-    if (!response.ok) {
-      showToast("Erro ao atualizar status");
-    } else {
-      setIsCompleted(newCompleted);
+    if (!response.ok) showToast("Erro ao atualizar status");
+    else {
+      setIsCompleted("Completed");
       showToast(newCompleted ? "Marcado como concluído" : "Removido dos concluídos");
     }
   }
@@ -96,9 +96,14 @@ export default function GameCard({
   return (
     <>
       <Link href={`/games/${externalId}`}>
-        <div className="flex-shrink-0 w-88 rounded-lg overflow-hidden bg-zinc-800 hover:scale-105 transition-transform duration-200">
+        <div className="flex-shrink-0 w-78 rounded-lg overflow-hidden bg-zinc-800 hover:scale-105 transition-transform duration-200">
           <div className="relative w-full h-48">
-            <Image src={backgroundImage || "/assets/gameNotFound1.jpg"} alt={`Capa de ${name}`} fill className="object-cover" />
+            <Image
+              alt={`Imagem do jogo ${name}`}
+              src={backgroundImage || "/assets/gameNotFound1.jpg"}
+              fill
+              className="object-cover"
+            />
             {showActions && (
               <div className="absolute bottom-2 right-2 flex gap-1">
                 <button
@@ -134,7 +139,7 @@ export default function GameCard({
       </Link>
 
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-700 border border-zinc-600 text-white text-sm px-5 py-3 rounded-lg shadow-lg">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-700 border-zinc-600 text-white text-sm px-5 py-3 rounded-lg shadow-lg">
           {toast}
         </div>
       )}

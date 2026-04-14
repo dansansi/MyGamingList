@@ -6,7 +6,7 @@ async function getCurrentUser() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
-  const res = await fetch(`http://localhost:5195/api/Auth/currentUser`, {
+  const res = await fetch(`http://localhost:5195/api/Auth/current-user`, {
     headers: { Cookie: `token=${token}` },
     cache: "no-store",
   });

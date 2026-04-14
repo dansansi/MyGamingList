@@ -20,6 +20,6 @@
         public bool Tba {  get; set; }
         public string? Background_Image { get; set; }
         public decimal? Rating { get; set; }
-        public List<RawgPlatformDto> Platforms { get; set; } = new();
+        public int Ratings_Count { get; set; }
     }
 }

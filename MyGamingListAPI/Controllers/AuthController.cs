@@ -68,7 +68,7 @@ namespace MyGamingListAPI.Controllers
             return Ok(new { token });
         }
 
-        [HttpPost("forgotPassword")]
+        [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPasswordTokenGenerator([FromBody] PasswordRecoveryDto dto)
         {  
             var user = await _userManager.FindByEmailAsync(dto.Email);
@@ -107,7 +107,7 @@ namespace MyGamingListAPI.Controllers
             return Ok("Senha redefinida!");
         }
 
-        [HttpGet("currentUser")]
+        [HttpGet("current-user")]
         [Authorize]
         public IActionResult GetCurrentUser() {
 

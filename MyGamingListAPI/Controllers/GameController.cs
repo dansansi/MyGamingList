@@ -28,7 +28,7 @@ namespace MyGamingListAPI.Controllers
             return Ok(game);
         }
 
-        [HttpGet("BackgroundImage")]
+        [HttpGet("background-image")]
         public async Task<IActionResult> GetBackgroundImage()
         {
             var image = await _gameService.GetBackgroundImageAsync();

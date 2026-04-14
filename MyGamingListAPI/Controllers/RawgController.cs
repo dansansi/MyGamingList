@@ -24,6 +24,7 @@ namespace MyGamingListAPI.Controllers
                 return Ok(games);
 
         }
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -33,5 +34,14 @@ namespace MyGamingListAPI.Controllers
 
             return Ok(game);
         }
+
+        [HttpGet("random-games")]
+        public async Task<IActionResult> GetRandomGames(CancellationToken cancellationToken = default)
+        {
+            var games = await _rawgApiService.GetRandomGamesAsync(cancellationToken);
+            return Ok(games);
+        }
     }
+
+
 }
