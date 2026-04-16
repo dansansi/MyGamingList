@@ -8,9 +8,9 @@ import { GameStatus } from "@/types/userGame";
 
 type CompletedState = "none" | "other" | "completed";
 
-function resolveCompletedState(status: string): CompletedState {
-  if (status === String(GameStatus.Completed)) return "completed";
-  if (status !== "") return "other";
+function resolveCompletedState(status: number | null): CompletedState {
+  if (status === GameStatus.Completed) return "completed";
+  if (status !== null) return "other";
   return "none";
 }
 
@@ -22,7 +22,7 @@ interface GameCardProps {
   showActions: boolean;
   isLoggedIn?: boolean;
   initialFavorite?: boolean;
-  initialStatus?: string;
+  initialStatus?: number | null;
 }
 
 export default function GameCard({
@@ -33,7 +33,7 @@ export default function GameCard({
   showActions = false,
   isLoggedIn = false,
   initialFavorite = false,
-  initialStatus = "",
+  initialStatus = null,
 }: GameCardProps) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
@@ -98,20 +98,21 @@ export default function GameCard({
     }
 
     const sendCompleted = completedState !== "completed";
+    const newStatus = sendCompleted ? Number(GameStatus.Completed) : null;
 
     const response = await fetch("/api/userGame", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         externalId,
-        status: sendCompleted ? Number(GameStatus.Completed) : null,
+        status: newStatus,
         isFavorite,
       }),
     });
     if (!response.ok) showToast("Erro ao atualizar status");
     else {
-      setCompletedState(sendCompleted ? "completed" : "none");
-      showToast(sendCompleted ? "Marcado como concluído" : "Removido dos concluídos");
+      setCompletedState(newStatus ? "completed" : "none");
+      showToast(newStatus ? "Marcado como concluído" : "Removido dos concluídos");
     }
   }
 
@@ -124,6 +125,7 @@ export default function GameCard({
               alt={`Imagem do jogo ${name}`}
               src={backgroundImage || "/assets/gameNotFound1.jpg"}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw,33vw"
               className="object-cover"
             />
             {showActions && (
@@ -133,10 +135,11 @@ export default function GameCard({
                   className="text-lg leading-none p-1 rounded-md bg-zinc-900/70 hover:bg-zinc-900 transition-colors"
                   aria-label="Marcar como concluído"
                 >
-                  {completedState === "completed" && <span className="text-green-400">✔</span>}
-                  {completedState === "other" && <span className="text-yellow-400">✔</span>}
-                  {completedState === "none" && <span className="text-zinc-500 hover:text-green-400 transition-colors">✔</span>}
+                  {completedState === "none" && <span className="text-zinc-500">Nâo iniciado</span>}
+                  {completedState === "completed" && <span className="text-green-400">Concluído</span>}
+                  {completedState === "other" && <span className="text-yellow-400">{completedState}</span>}
                 </button>
+
                 <button
                   onClick={handleFavoriteClick}
                   className="text-lg leading-none p-1 rounded-md bg-zinc-900/70 hover:bg-zinc-900 transition-colors"
