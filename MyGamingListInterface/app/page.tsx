@@ -23,9 +23,15 @@ interface RandomGame {
   ratingsCount: number;
 }
 
+interface UserGame {
+  externalId: number;
+  status: number | null;
+  isFavorite: boolean | null;
+}
+
 async function getUpcomingAndNewGames(): Promise<HomeGamesResponse> {
   const res = await fetch("http://localhost:5195/api/HomeGames", {
-    next: { revalidate: 2000 },
+    next: { revalidate: 21600 },
   });
   if (!res.ok) throw new Error("Erro ao buscar jogos da home");
   return res.json();
@@ -39,14 +45,28 @@ async function getRandomGames(): Promise<RandomGame[]> {
   return res.json();
 }
 
+async function getUserGames(token: string): Promise<UserGame[]> {
+  const res = await fetch("http://localhost:5195/api/UserGame", {
+    headers: { Cookie: `token=${token}` },
+    cache: "no-store",
+  });
+  if (!res.ok) return [];
+  return res.json();
+}
+
 export default async function Home() {
   const cookieStore = await cookies();
-  const isLoggedIn = !!cookieStore.get("token")?.value;
+  const token = cookieStore.get("token")?.value;
+  const isLoggedIn = !!token;
 
-  const [carouselData, randomGames] = await Promise.all([getUpcomingAndNewGames(), getRandomGames()]);
+  const [carouselData, randomGames, userGames] = await Promise.all([
+    getUpcomingAndNewGames(),
+    getRandomGames(),
+    isLoggedIn ? getUserGames(token!) : Promise.resolve([]),
+  ]);
 
   return (
-    <div className="min-h-screen bg-zinc-900 px-4">
+    <div className="min-h-screen bg-zinc-900 pt-20 px-4">
       <section className="max-w-2xl mx-auto text-center py-10">
         <h1 className="text-white text-3xl font-bold mb-3">MyGamingList</h1>
         <p className="text-zinc-400 text-sm leading-relaxed">
@@ -70,7 +90,7 @@ export default async function Home() {
 
       <section className="mt-6">
         <h2 className="text-white font-bold text-lg px-4 mb-4">Descubra jogos</h2>
-        <HomeGrid initialGames={randomGames} isLoggedIn={isLoggedIn} />
+        <HomeGrid initialGames={randomGames} isLoggedIn={isLoggedIn} initialUserGames={userGames} />
       </section>
     </div>
   );

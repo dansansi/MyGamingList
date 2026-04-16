@@ -11,9 +11,9 @@ export default async function Header() {
     headers: {
       Cookie: `token=${token}`,
     },
-  });
+  }).catch(() => null);
 
-  const user = res.ok ? await res.json() : null;
+  const user = res?.ok ? await res.json() : null;
 
   return (
     <header className="w-full h-16 bg-zinc-800 px-6 py-4 flex items-center justify-between">

@@ -13,23 +13,33 @@ interface Game {
   ratingsCount: number;
 }
 
+interface UserGame {
+  externalId: number;
+  status: number | null;
+  isFavorite: boolean | null;
+}
+
 interface HomeGridProps {
   initialGames: Game[];
   isLoggedIn: boolean;
+  initialUserGames: UserGame[];
 }
 
-export default function HomeGrid({ initialGames, isLoggedIn }: HomeGridProps) {
+export default function HomeGrid({ initialGames, isLoggedIn, initialUserGames }: HomeGridProps) {
   const [games, setGames] = useState<Game[]>(initialGames);
+  const [userGames, setUserGames] = useState<UserGame[]>(initialUserGames);
   const [loading, setLoading] = useState(false);
 
   async function fetchRandomGames() {
     setLoading(true);
     try {
-      const res = await fetch("/api/random-games", { cache: "no-store" });
-      if (res.ok) {
-        const data = await res.json();
-        setGames(data);
-      }
+      const [gamesRes, userGamesRes] = await Promise.all([
+        fetch("/api/random-games", { cache: "no-store" }),
+        isLoggedIn ? fetch("/api/userGame", { cache: "no-store" }) : Promise.resolve(null),
+      ]);
+
+      if (gamesRes.ok) setGames(await gamesRes.json());
+      if (userGamesRes?.ok) setUserGames(await userGamesRes.json());
     } finally {
       setLoading(false);
     }
@@ -38,17 +48,22 @@ export default function HomeGrid({ initialGames, isLoggedIn }: HomeGridProps) {
   return (
     <div className="relative">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4 py-6">
-        {games.map((game) => (
-          <GameCard
-            key={game.externalId}
-            externalId={game.externalId}
-            name={game.name}
-            backgroundImage= {game.backgroundImage}
-            releaseDate={game.releaseDate}
-            showActions={true}
-            isLoggedIn={isLoggedIn}
-          />
-        ))}
+        {games.map((game) => {
+          const userGame = userGames.find((ug) => ug.externalId === game.externalId);
+          return (
+            <GameCard
+              key={game.externalId}
+              externalId={game.externalId}
+              name={game.name}
+              backgroundImage={game.backgroundImage}
+              releaseDate={game.releaseDate}
+              showActions={true}
+              isLoggedIn={isLoggedIn}
+              initialFavorite={userGame?.isFavorite ?? false}
+              initialStatus={userGame?.status != null ? String(userGame.status) : ""}
+            />
+          );
+        })}
       </div>
 
       <button
