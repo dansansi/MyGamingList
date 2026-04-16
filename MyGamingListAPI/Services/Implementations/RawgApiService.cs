@@ -80,5 +80,28 @@ namespace MyGamingListAPI.Services.Implementations
                 throw;
             }
         }
+
+        public async Task<List<RawgGameDto>> GetRandomGamesFromApiAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var randomPage = new Random().Next(1, 11);
+                var url = $"games?key={_apiKey}" +
+                          $"&dates=1993-01-01,{DateTime.UtcNow:yyyy-MM-dd}" +
+                          $"&platforms=1,4,7,8,9,10,11,14,15,16,18,27,49,74,79,80,83,105,106,107,167,186,187" +
+                          $"&ratings_count=10" +
+                          $"&page_size=40" +
+                          $"&page={randomPage}" +
+                          $"&ordering=-rating";
+
+                var response = await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(url, cancellationToken);
+                return response?.Results ?? new List<RawgGameDto>();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogos aleatórios da RAWG");
+                throw;
+            }
+        }
     }
 }

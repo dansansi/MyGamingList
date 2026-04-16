@@ -33,13 +33,13 @@ export default function UserMenu({ username }: { username: string }) {
       {open && (
         <div className="absolute right-0 mt-2 w-40 bg-zinc-800 border border-zinc-700 rounded shadow-lg">
           <Link href="/profile" className="block px-4 py-2 text-sm text-zinc-300 hover:text-white hover:bg-zinc-700">
-            Perfil
+            Profile
           </Link>
           <button
             onClick={handleLogout}
             className="w-full text-left px-4 py-2 text-sm text-zinc-300 hover-text-white hover:bg-zinc-700"
           >
-            Sair
+            Logout
           </button>
         </div>
       )}

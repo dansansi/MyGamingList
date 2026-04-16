@@ -7,13 +7,13 @@ export default async function Header() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
-  const res = await fetch("http://localhost:5195/api/Auth/currentUser", {
+  const res = await fetch("http://localhost:5195/api/Auth/current-user", {
     headers: {
       Cookie: `token=${token}`,
     },
-  });
+  }).catch(() => null);
 
-  const user = res.ok ? await res.json() : null;
+  const user = res?.ok ? await res.json() : null;
 
   return (
     <header className="w-full h-16 bg-zinc-800 px-6 py-4 flex items-center justify-between">
@@ -26,7 +26,7 @@ export default async function Header() {
           <UserMenu username={user.username} />
         ) : (
           <Link href="/login" className="text-zinc-300 hover:text-white text-sm">
-            Entrar
+            Log in
           </Link>
         )}
       </nav>

@@ -138,6 +138,55 @@ namespace MyGamingListAPI.Services.Implementations
             }
         }
 
+        public async Task<bool> EnsureGetOrCreateGameByIdAsync(int externalId)
+        {
+            try
+            {
+                //Procura do banco de dados
+                var game = await _context.Games.FirstOrDefaultAsync(g => g.ExternalId == externalId);
+
+                if (game == null)
+                {
+                    //Procura da Api
+                    var apiGame = await _rawgApiService.SearchGameByIdAsync(externalId);
+
+                    if (apiGame == null) return false;
+
+                    var gameCreate = new GameCreateDto
+                    {
+                        ExternalId = apiGame.Id,
+                        Name = apiGame.Name!,
+                        Description = apiGame.Description!,
+                        Slug = apiGame.Slug!,
+                        BackgroundImage = apiGame.Background_Image!,
+                        ReleaseDate = apiGame.Released,
+                        Tba = apiGame.Tba,
+                        Rating = apiGame.Rating,
+                    };
+
+                    //Cria jogo no banco de dados.
+                    var createdGame = await CreateAsync(gameCreate);
+                    return true;
+                }
+                return true;
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogo da Api externa {Id}", externalId);
+                throw;
+            }
+            catch (SqliteException ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogo do banco de dados {Id}", externalId);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogos {Id}", externalId);
+                throw;
+            }
+        }
+
         public async Task<GameReadDto?> UpdateAsync(int id, GameUpdateDto dto)
         {
             try

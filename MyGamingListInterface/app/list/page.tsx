@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { GameStatus } from "@/types/userGame";
-import GameListCard from "@/components/GameListCard";
+import GameListCard from "@/components/UserListPage/GameListCard";
 
 interface UserGame {
   externalId: number;

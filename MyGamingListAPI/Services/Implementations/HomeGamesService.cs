@@ -4,6 +4,7 @@ using MyGamingListAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using MyGamingListAPI.DTOs.HomeGames;
 using static MyGamingListAPI.Models.HomeGames;
+
 namespace MyGamingListAPI.Services.Implementations
 {
     public class HomeGamesService(AppDbContext context, IRawgApiService rawgApiService, ILogger<HomeGamesService> logger) : IHomeGamesService
@@ -12,7 +13,7 @@ namespace MyGamingListAPI.Services.Implementations
         private readonly IRawgApiService _rawgApiService = rawgApiService;
         private readonly ILogger<HomeGamesService> _logger = logger;
 
-        public async Task SyncHomeGamesAsync(CancellationToken cancellationToken = default)
+        public async Task SyncHomeGamesToDbAsync(CancellationToken cancellationToken = default)
         {
             try
             {
@@ -55,7 +56,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
         }
 
-        public async Task<HomeGamesReleasesDto> GetHomeGamesAsync()
+        public async Task<HomeGamesReleasesDto> GetNewHomeGamesAsync()
         {
             try
             {
@@ -88,6 +89,27 @@ namespace MyGamingListAPI.Services.Implementations
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao buscar upcoming do banco de dados.");
+                throw;
+            }
+        }
+        public async Task<List<HomeGamesDto>> GetRandomHomeGamesAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var games = await _rawgApiService.GetRandomGamesFromApiAsync(cancellationToken);
+                return games.Select(g => new HomeGamesDto
+                {
+                    ExternalId = g.Id,
+                    Name = g.Name,
+                    BackgroundImage = g.Background_Image,
+                    ReleaseDate = g.Released,
+                    Rating = g.Rating,
+                    RatingsCount = g.Ratings_Count
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao buscar jogos aleatórios pra home");
                 throw;
             }
         }
