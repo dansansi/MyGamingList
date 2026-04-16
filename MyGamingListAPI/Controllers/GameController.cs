@@ -28,6 +28,16 @@ namespace MyGamingListAPI.Controllers
             return Ok(game);
         }
 
+        [HttpGet("ensure/{externalId}")]
+        public async Task<IActionResult> EnsureGetGameById(int externalId)
+        {
+            var game = await _gameService.EnsureGetOrCreateGameByIdAsync(externalId);
+            {
+                if (game == false) return BadRequest();
+            }
+            return Ok();
+        }
+
         [HttpGet("background-image")]
         public async Task<IActionResult> GetBackgroundImage()
         {
@@ -76,4 +86,4 @@ namespace MyGamingListAPI.Controllers
             return NoContent();
         }
     }
-} 
+}

@@ -32,7 +32,7 @@ export default async function GamePage({ params }: Props) {
   });
   const userGame = userGameResponse.ok ? await userGameResponse.json() : null;
 
-  const response = await fetch(`http://localhost:5195/api/Game/${id}`);
+  const response = await fetch(`http://localhost:5195/api/game/${id}`);
   const game: Game = await response.json();
 
   return (

@@ -6,6 +6,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { GameStatus } from "@/types/userGame";
 
+type CompletedState = "none" | "other" | "completed";
+
+function resolveCompletedState(status: string): CompletedState {
+  if (status === String(GameStatus.Completed)) return "completed";
+  if (status !== "") return "other";
+  return "none";
+}
+
 interface GameCardProps {
   externalId: number;
   name: string;
@@ -29,7 +37,7 @@ export default function GameCard({
 }: GameCardProps) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
-  const [isCompleted, setIsCompleted] = useState(initialStatus);
+  const [completedState, setCompletedState] = useState<CompletedState>(resolveCompletedState(initialStatus));
   const [toast, setToast] = useState<string | null>(null);
 
   const formattedDate = releaseDate
@@ -51,13 +59,19 @@ export default function GameCard({
       router.push(`/login?redirect=/games/${externalId}`);
       return;
     }
+
+    const getOrCreate = await fetch(`/api/game/ensure/${externalId}`);
+    if (!getOrCreate.ok) {
+      showToast("Erro ao buscar jogo");
+      return;
+    }
     const newFavorite = !isFavorite;
     const response = await fetch("/api/userGame", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         externalId,
-        status: isCompleted ? Number(GameStatus.Completed) : null,
+        status: initialStatus ? Number(GameStatus.Completed) : null,
         isFavorite: newFavorite,
       }),
     });
@@ -76,20 +90,28 @@ export default function GameCard({
       router.push(`/login?redirect=/games/${externalId}`);
       return;
     }
-    const newCompleted = !isCompleted;
+
+    const getOrCreate = await fetch(`/api/game/ensure/${externalId}`);
+    if (!getOrCreate.ok) {
+      showToast("Erro ao buscar jogo");
+      return;
+    }
+
+    const sendCompleted = completedState !== "completed";
+
     const response = await fetch("/api/userGame", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         externalId,
-        status: newCompleted ? Number(GameStatus.Completed) : null,
+        status: sendCompleted ? Number(GameStatus.Completed) : null,
         isFavorite,
       }),
     });
     if (!response.ok) showToast("Erro ao atualizar status");
     else {
-      setIsCompleted("Completed");
-      showToast(newCompleted ? "Marcado como concluído" : "Removido dos concluídos");
+      setCompletedState(sendCompleted ? "completed" : "none");
+      showToast(sendCompleted ? "Marcado como concluído" : "Removido dos concluídos");
     }
   }
 
@@ -109,13 +131,11 @@ export default function GameCard({
                 <button
                   onClick={handleCompletedClick}
                   className="text-lg leading-none p-1 rounded-md bg-zinc-900/70 hover:bg-zinc-900 transition-colors"
-                  aria-label={isCompleted ? "Remover dos concluídos" : "Marcar como concluído"}
+                  aria-label="Marcar como concluído"
                 >
-                  {isCompleted ? (
-                    <span className="text-green-400">✔</span>
-                  ) : (
-                    <span className="text-zinc-500 hover:text-green-400 transition-colors">✔</span>
-                  )}
+                  {completedState === "completed" && <span className="text-green-400">✔</span>}
+                  {completedState === "other" && <span className="text-yellow-400">✔</span>}
+                  {completedState === "none" && <span className="text-zinc-500 hover:text-green-400 transition-colors">✔</span>}
                 </button>
                 <button
                   onClick={handleFavoriteClick}

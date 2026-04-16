@@ -66,7 +66,7 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="min-h-screen bg-zinc-900 pt-20 px-4">
+    <div className="min-h-screen bg-zinc-900 px-4">
       <section className="max-w-2xl mx-auto text-center py-10">
         <h1 className="text-white text-3xl font-bold mb-3">MyGamingList</h1>
         <p className="text-zinc-400 text-sm leading-relaxed">
