@@ -19,7 +19,7 @@ interface GameCardProps {
   name: string;
   backgroundImage: string;
   releaseDate?: string;
-  showActions: boolean;
+  showActions?: boolean;
   isLoggedIn?: boolean;
   initialFavorite?: boolean;
   initialStatus?: number | null;
@@ -137,7 +137,7 @@ export default function GameCard({
                 >
                   {completedState === "none" && <span className="text-zinc-500">Nâo iniciado</span>}
                   {completedState === "completed" && <span className="text-green-400">Concluído</span>}
-                  {completedState === "other" && <span className="text-yellow-400">{completedState}</span>}
+                  {completedState === "other" && <span className="text-yellow-400">Em progresso</span>}
                 </button>
 
                 <button
