@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -12,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     async function getBackgroundImage() {
-      const res = await fetch("/api/Game/BackgroundImage");
+      const res = await fetch("/api/game/BackgroundImage");
       const img = await res.text();
       setBgImage(img.trim());
     }
@@ -24,7 +25,7 @@ export default function LoginPage() {
   async function handleSubmit() {
     setError("");
 
-    const response = await fetch("api/auth/login", {
+    const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ login, password }),
@@ -47,7 +48,7 @@ export default function LoginPage() {
       }}
     >
       <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-sm flex flex-col gap-4 opacity-92">
-        <h1 className="text-white text-2xl font-semibold">Entrar</h1>
+        <h1 className="text-white text-2xl font-semibold">Log in</h1>
 
         <input
           type="login"
@@ -62,7 +63,7 @@ export default function LoginPage() {
 
         <input
           type="password"
-          placeholder="Senha"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => {
@@ -77,17 +78,17 @@ export default function LoginPage() {
           onClick={handleSubmit}
           className="bg-zinc-600 hover:bg-zinc-500 text-white rounded-lg px-4 py-2 font-medium transition-colors"
         >
-          Logar
+          Log in
         </button>
 
         <p className="text-zinc-400 text-sm text-center">
-          Não tem conta?{" "}
+          Don't have an account?{" "}
           <Link href="/register" className="text-white hover:underline">
-            Cadastre-se
+            Sign in
           </Link>
         </p>
         <Link href={"/forgot-password"}>
-          <p className="text-white text-sm flex justify-center">Esqueceu a senha?</p>
+          <p className="text-white text-sm flex justify-center">Forgot your password?</p>
         </Link>
       </div>
     </main>

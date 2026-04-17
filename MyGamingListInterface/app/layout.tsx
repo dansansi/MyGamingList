@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt" className="h-full">
+    <html lang="en" className="h-full">
       <body className={`${geist.variable} antialiased bg-zinc-900 text-white flex flex-col h-full`}>
         <Header />
         {children}

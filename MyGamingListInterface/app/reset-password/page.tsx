@@ -59,7 +59,7 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <h1 className="text-white text-2xl font-bold tracking-tight">MyGamingList</h1>
-          <p className="text-zinc-400 text-sm mt-1">Redefinição de senha</p>
+          <p className="text-zinc-400 text-sm mt-1">Password creation</p>
         </div>
 
         <div className="bg-zinc-800 rounded-2xl p-8 shadow-xl">
@@ -70,47 +70,47 @@ export default function ResetPasswordPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h2 className="text-white text-lg font-semibold">Senha redefinida!</h2>
-              <p className="text-zinc-400 text-sm">Sua senha foi alterada com sucesso. Agora você pode fazer login.</p>
+              <h2 className="text-white text-lg font-semibold">Password created!</h2>
+              <p className="text-zinc-400 text-sm">Your password was created successfully, you can log in now.</p>
               <Link
                 href="/login"
                 className="block mt-2 w-full bg-zinc-600 hover:bg-zinc-500 text-white font-medium rounded-lg py-2.5 text-sm text-center transition-colors"
               >
-                Ir para o login
+                Go to login
               </Link>
             </div>
           ) : (
             <>
-              <h2 className="text-white text-lg font-semibold mb-1">Nova senha</h2>
+              <h2 className="text-white text-lg font-semibold mb-1">New password</h2>
               <p className="text-zinc-400 text-sm mb-6">
-                Escolha uma senha nova para <span className="text-zinc-200">{email}</span>.
+                Choose a new password <span className="text-zinc-200">{email}</span>.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-zinc-300 text-sm mb-1.5">Nova senha</label>
+                  <label className="block text-zinc-300 text-sm mb-1.5">New password</label>
                   <input
                     type="password"
                     required
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Mínimo 8 caracteres"
+                    placeholder="8 chars minimum."
                     className="w-full bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-zinc-500 transition"
                   />
-                  {passwordTooShort && <p className="text-red-400 text-xs mt-1">A senha deve ter pelo menos 8 caracteres.</p>}
+                  {passwordTooShort && <p className="text-red-400 text-xs mt-1">Password have to be 8 chars or bigger.</p>}
                 </div>
 
                 <div>
-                  <label className="block text-zinc-300 text-sm mb-1.5">Confirmar senha</label>
+                  <label className="block text-zinc-300 text-sm mb-1.5">Confirm password</label>
                   <input
                     type="password"
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Repita a senha"
+                    placeholder="Repeat your password"
                     className="w-full bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-zinc-500 transition"
                   />
-                  {passwordMismatch && <p className="text-red-400 text-xs mt-1">As senhas não coincidem.</p>}
+                  {passwordMismatch && <p className="text-red-400 text-xs mt-1">Passwords mismatch.</p>}
                 </div>
 
                 {status === "error" && <p className="text-red-400 text-sm">{errorMsg}</p>}
@@ -126,7 +126,7 @@ export default function ResetPasswordPage() {
 
               <div className="mt-6 text-center">
                 <Link href="/login" className="text-zinc-400 hover:text-zinc-300 text-sm transition-colors">
-                  ← Voltar para o login
+                  ← Go back to login page
                 </Link>
               </div>
             </>

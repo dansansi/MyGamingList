@@ -135,9 +135,9 @@ export default function GameCard({
                   className="text-lg leading-none p-1 rounded-md bg-zinc-900/70 hover:bg-zinc-900 transition-colors"
                   aria-label="Marcar como concluído"
                 >
-                  {completedState === "none" && <span className="text-zinc-500">Nâo iniciado</span>}
-                  {completedState === "completed" && <span className="text-green-400">Concluído</span>}
-                  {completedState === "other" && <span className="text-yellow-400">Em progresso</span>}
+                  {completedState === "none" && <span className="text-zinc-500">Not started</span>}
+                  {completedState === "completed" && <span className="text-green-400">Completed</span>}
+                  {completedState === "other" && <span className="text-yellow-400">In Progress</span>}
                 </button>
 
                 <button

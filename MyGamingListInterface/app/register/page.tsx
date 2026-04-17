@@ -39,7 +39,7 @@ export default function RegisterPage() {
   return (
     <main className="flex items-center justify-center min-h-screen">
       <div className="bg-zinc-800 p-8 rounded-xl w-full max-w-sm flex flex-col gap-4">
-        <h1 className="text-white text-2xl font-semibold">Cadastro</h1>
+        <h1 className="text-white text-2xl font-semibold">Register</h1>
 
         <input
           type="text"
@@ -60,17 +60,17 @@ export default function RegisterPage() {
         <div className="w-full">
           <input
             type="password"
-            placeholder="Senha"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="bg-zinc-700 text-white placeholder-zinc-400 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-zinc-500 w-full"
           />
 
-          <p className={`text-xs mt-1 ${passwordRules.maiuscula ? "text-green-400" : "text-zinc-500"}`}>1 maiúscula</p>
-          <p className={`text-xs mt-1 ${passwordRules.minuscula ? "text-green-400" : "text-zinc-500"}`}>1 minúscula</p>
-          <p className={`text-xs mt-1 ${passwordRules.especial ? "text-green-400" : "text-zinc-500"}`}>1 caracter especial</p>
-          <p className={`text-xs mt-1 ${passwordRules.numero ? "text-green-400" : "text-zinc-500"}`}>1 número</p>
-          <p className={`text-xs mt-1 ${passwordRules.minimo ? "text-green-400" : "text-zinc-500"}`}>Minimo 8 digitos</p>
+          <p className={`text-xs mt-1 ${passwordRules.maiuscula ? "text-green-400" : "text-zinc-500"}`}>1 upper case</p>
+          <p className={`text-xs mt-1 ${passwordRules.minuscula ? "text-green-400" : "text-zinc-500"}`}>1 lower case</p>
+          <p className={`text-xs mt-1 ${passwordRules.especial ? "text-green-400" : "text-zinc-500"}`}>1 special char</p>
+          <p className={`text-xs mt-1 ${passwordRules.numero ? "text-green-400" : "text-zinc-500"}`}>1 number</p>
+          <p className={`text-xs mt-1 ${passwordRules.minimo ? "text-green-400" : "text-zinc-500"}`}>8 chars minimum</p>
         </div>
 
         {error && <p className="text-red-400 text-sm">{error}</p>}
@@ -79,13 +79,13 @@ export default function RegisterPage() {
           onClick={handleSubmit}
           className="bg-zinc-600 hover:bg-zinc-500 text-white rounded-lg px-4 py-2 font-medium transition-colors"
         >
-          Criar conta
+          Create an account
         </button>
 
         <p className="text-zinc-400 text-sm text-center">
-          Já tem conta?{" "}
+          Already have an account?{" "}
           <Link href="/login" className="text-white hover:underline">
-            Entrar
+            Log in
           </Link>
         </p>
       </div>

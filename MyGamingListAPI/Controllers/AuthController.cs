@@ -35,7 +35,7 @@ namespace MyGamingListAPI.Controllers
 
             });
 
-            return Ok(message);
+            return Ok(new { token });
         }
 
         [HttpPost("forgot-password")]
@@ -56,12 +56,12 @@ namespace MyGamingListAPI.Controllers
         [Authorize]
         public IActionResult GetCurrentUser()
         {
-            var userName = User.FindFirstValue(ClaimTypes.Name);
+            var username = User.FindFirstValue(ClaimTypes.Name);
             var email = User.FindFirstValue(ClaimTypes.Email);
 
-            if (userName == null || email == null) return Unauthorized();
+            if (username == null || email == null) return Unauthorized();
 
-            return Ok(new {userName, email});
+            return Ok(new {username, email});
         }
     }
 }

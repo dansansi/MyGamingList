@@ -68,13 +68,13 @@ namespace MyGamingListAPI.Services.Implementations
             var resetLink = $"{frontEndUrl}/reset-password?token={encodedToken}&email={email}";
 
             var body = $@"
-                <p>Você solicitou a redefinição de senha.</p>
-                <p><a href='{resetLink}'>Clique aqui para redefinir sua senha.</a></p>
-                <p>Se não foi você, ignore este e-mail.</p>
-                <small>Este link expira em 1 hora.</small>
+                <p>You required to recreate your password.</p>
+                <p><a href='{resetLink}'>Click here to recreate your password.</a></p>
+                <p>If this wasn't you, you can ignore this e-mail.</p>
+                <small>This link expires in 1 hour.</small>
             ";
 
-            await _emailService.SendPasswordRedoEmailAsync(email, "Redefinição de senha MyGamingList", body);
+            await _emailService.SendPasswordRedoEmailAsync(email, "MyGamingList password redefinition ", body);
         }
 
         public async Task<(bool Success, IEnumerable<string> Errors)> ResetPasswordAsync(ResetPasswordDto dto)
@@ -87,7 +87,7 @@ namespace MyGamingListAPI.Services.Implementations
 
             if (!result.Succeeded)
                 return (false, result.Errors.Select(e => e.Description));
-
+            Console.WriteLine(result);
             return (true, []);
         }
     }
