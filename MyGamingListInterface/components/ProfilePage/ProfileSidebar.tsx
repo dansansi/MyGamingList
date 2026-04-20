@@ -1,5 +1,5 @@
 interface User {
-  username: string;
+  userName: string;
   email: string;
 }
 
@@ -21,7 +21,7 @@ export default function ProfileSidebar({ user, games }: Props) {
   return (
     <aside className="w-64 min-h-[calc(100vh-64px)] bg-[#1f1f22] p-6 flex flex-col gap-6">
       <div className="flex flex-col gap-1">
-        <h2 className="text-lg font-bold text-white">{user.username}</h2>
+        <h2 className="text-lg font-bold text-white">{user.userName}</h2>
         <p className="text-sm text-zinc-400">{user.email}</p>
       </div>
 

@@ -69,9 +69,9 @@ export default async function Home() {
     <div className="min-h-screen bg-zinc-900 px-4">
       <section className="max-w-2xl mx-auto text-center py-10">
         <h1 className="text-white text-3xl font-bold mb-3">MyGamingList</h1>
-        <p className="text-zinc-400 text-sm leading-relaxed">
-          Organize sua jornada nos games. Acompanhe o que você já jogou, o que está jogando agora, e descubra novos títulos pra
-          adicionar à sua lista.
+        <p className="text-zinc-400 text- leading-relaxed">
+          Track all your games, the new ones you are playing, the old ones you already completed, even the ones you did not like,
+          and of course, favorite the ones you love the most.
         </p>
       </section>
 
@@ -89,7 +89,7 @@ export default async function Home() {
       />
 
       <section className="mt-6">
-        <h2 className="text-white font-bold text-lg px-4 mb-4">Descubra jogos</h2>
+        <h2 className="text-white font-bold text-lg px-4 mb-4">Discover new games</h2>
         <HomeGrid initialGames={randomGames} isLoggedIn={isLoggedIn} initialUserGames={userGames} />
       </section>
     </div>

@@ -92,7 +92,8 @@ namespace MyGamingListAPI.Services.Implementations
                           $"&ratings_count=10" +
                           $"&page_size=40" +
                           $"&page={randomPage}" +
-                          $"&ordering=-rating";
+                          $"&ordering=-rating" +
+                          $"&esrb_rating=1,2,3,4";
 
                 var response = await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(url, cancellationToken);
                 return response?.Results ?? new List<RawgGameDto>();

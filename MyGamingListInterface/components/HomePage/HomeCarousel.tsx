@@ -20,6 +20,7 @@ interface HomeCarouselProps {
 export default function HomeCarousel({ title, games, gradientClass, storageKey }: HomeCarouselProps) {
   const [isVisible, setIsVisible] = useState(true);
   const storageKeyRef = useRef(storageKey);
+  const scrollref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKeyRef.current);
@@ -28,14 +29,18 @@ export default function HomeCarousel({ title, games, gradientClass, storageKey }
     }
   }, []);
 
-  const scrollref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = scrollref.current;
+    if (!el) return;
 
-  function handleWheel(e: React.WheelEvent) {
-    e.preventDefault();
-    if (scrollref.current) {
-      scrollref.current.scrollLeft += e.deltaY;
-    }
-  }
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      el.scrollLeft += e.deltaY;
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, []);
 
   function toggleVisibility() {
     const next = !isVisible;
@@ -57,7 +62,6 @@ export default function HomeCarousel({ title, games, gradientClass, storageKey }
       >
         <div
           ref={scrollref}
-          onWheel={handleWheel}
           className="flex gap-6 overflow-x-auto px-4 py-3 bg-zinc-800/50 rounded-b-lg scrollbar-hide opacity-100"
         >
           {games.map((game) => (

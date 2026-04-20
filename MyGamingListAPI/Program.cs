@@ -71,6 +71,7 @@ builder.Services.AddHttpClient<IRawgApiService, RawgApiService>(client =>
     client.BaseAddress = new Uri("https://api.rawg.io/api/");
 });
 
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IGameService, GameService>();
