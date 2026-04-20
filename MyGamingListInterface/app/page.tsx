@@ -70,7 +70,7 @@ export default async function Home() {
       <section className="max-w-2xl mx-auto text-center py-10">
         <h1 className="text-white text-3xl font-bold mb-3">MyGamingList</h1>
         <p className="text-zinc-400 text- leading-relaxed">
-          Track all your games, the new ones you are playing, the old ones you already completed, even the ones you didn not like,
+          Track all your games, the new ones you are playing, the old ones you already completed, even the ones you did not like,
           and of course, favorite the ones you love the most.
         </p>
       </section>
