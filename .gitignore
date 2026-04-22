@@ -14,7 +14,6 @@
 *.db-shm
 *.db-wal
 
-
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -422,3 +421,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/MyGamingListAPI/appsettings.json
+/MyGamingListAPI/appsettings.Development.json
+/MyGamingListAPI/Properties/launchSettings.json

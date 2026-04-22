@@ -7,12 +7,12 @@
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "DefaultConnection": "Data Source=Data/gaminglist.db"
+    "DefaultConnection": ""
   },
   "JwtSettings": {
-    "Issuer": "MyGamingList",
-    "Audience": "MyGamingListUsers",
-    "ExpirationMinutes": 30
+    "Issuer": "",
+    "Audience": "",
+    "ExpirationMinutes": 
   },
   "Frontend": {
     "BaseUrl": ""
