@@ -13,6 +13,7 @@
 *.db
 *.db-shm
 *.db-wal
+*.yml
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -424,3 +425,4 @@ FodyWeavers.xsd
 /MyGamingListAPI/appsettings.json
 /MyGamingListAPI/appsettings.Development.json
 /MyGamingListAPI/Properties/launchSettings.json
+/MyGamingListAPI/Dockerfile
