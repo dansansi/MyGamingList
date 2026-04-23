@@ -23,7 +23,7 @@ export default function RegisterPage() {
   async function handleSubmit() {
     setError("");
 
-    const response = await fetch("api/auth/register", {
+    const response = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ userName, email, password }),

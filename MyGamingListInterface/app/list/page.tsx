@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { GameStatus } from "@/types/userGame";
 import GameListCard from "@/components/UserListPage/GameListCard";
@@ -23,7 +23,7 @@ export default function ListPage() {
   const [toast, setToast] = useState<string | null>(null);
   useEffect(() => {
     async function fetchGames() {
-      const res = await fetch("api/userGame");
+      const res = await fetch("/api/userGame");
       if (!res.ok) return;
       const data: UserGame[] = await res.json();
       setGames(data);
