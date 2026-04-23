@@ -9,7 +9,7 @@ namespace MyGamingListAPI.Services.Implementations
         private readonly string _smtpHost = "smtp.gmail.com";
         private readonly int _smtpPort = 587;
         private readonly string _smtpUser = "MyGamingListSansi@gmail.com";
-        private readonly string _smtpPass = configuration["E-mail:Key"]!;
+        private readonly string _smtpPass = configuration["Email:Key"]!;
         private readonly ILogger<EmailService> _logger = logger;
 
 
