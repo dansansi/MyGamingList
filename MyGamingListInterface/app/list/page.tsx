@@ -14,7 +14,7 @@ interface UserGame {
   backgroundImage: string | null;
 }
 
-export default function ListPage() {
+function ListPageContent() {
   const searchParams = useSearchParams();
   const sort = searchParams.get("sort");
 
@@ -83,5 +83,13 @@ export default function ListPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ListPage() {
+  return (
+    <Suspense fallback={null}>
+      <ListPageContent />
+    </Suspense>
   );
 }
