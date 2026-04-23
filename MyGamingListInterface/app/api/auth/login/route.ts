@@ -1,9 +1,10 @@
+import { API_URL } from "@/lib/api";
 import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
-  const response = await fetch("http://localhost:5195/api/auth/login", {
+  const response = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -15,10 +16,7 @@ export async function POST(request: NextRequest) {
   const { token } = await response.json();
 
   const res = Response.json({ success: true });
-  res.headers.set(
-    "Set-Cookie",
-    `token=${token}; HttpOnly; Path=/; SameSite=Strict; Max-Age=604800`,
-  );
+  res.headers.set("Set-Cookie", `token=${token}; HttpOnly; Path=/; SameSite=Strict; Max-Age=604800`);
 
   return res;
 }

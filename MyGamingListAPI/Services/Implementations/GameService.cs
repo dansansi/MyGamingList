@@ -1,11 +1,11 @@
 ﻿
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using MyGamingListAPI.Data;
 using MyGamingListAPI.DTOs.Game;
 using MyGamingListAPI.DTOs.RawgApi;
 using MyGamingListAPI.Models;
 using MyGamingListAPI.Services.Interfaces;
+using Npgsql;
 
 namespace MyGamingListAPI.Services.Implementations
 {
@@ -126,7 +126,7 @@ namespace MyGamingListAPI.Services.Implementations
                 _logger.LogError(ex, "Erro ao buscar jogo da Api externa {Id}", externalId);
                 throw;
             }
-            catch (SqliteException ex)
+            catch (PostgresException ex)
             {
                 _logger.LogError(ex, "Erro ao buscar jogo do banco de dados {Id}", externalId);
                 throw;
@@ -175,7 +175,7 @@ namespace MyGamingListAPI.Services.Implementations
                 _logger.LogError(ex, "Erro ao buscar jogo da Api externa {Id}", externalId);
                 throw;
             }
-            catch (SqliteException ex)
+            catch (PostgresException ex)
             {
                 _logger.LogError(ex, "Erro ao buscar jogo do banco de dados {Id}", externalId);
                 throw;

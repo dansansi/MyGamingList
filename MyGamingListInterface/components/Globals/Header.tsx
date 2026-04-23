@@ -2,12 +2,13 @@ import Link from "next/link";
 import SearchBar from "./SearchBar";
 import { cookies } from "next/headers";
 import UserMenu from "./UserMenu";
+import { API_URL } from "@/lib/api";
 
 export default async function Header() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
-  const res = await fetch("http://localhost:5195/api/Auth/current-user", {
+  const res = await fetch(`${API_URL}/api/Auth/current-user`, {
     headers: {
       Cookie: `token=${token}`,
     },

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import HomeCarousel from "@/components/HomePage/HomeCarousel";
 import HomeGrid from "@/components/HomePage/HomeGrid";
+import { API_URL } from "@/lib/api";
 
 interface Game {
   externalId: number;
@@ -30,7 +31,7 @@ interface UserGame {
 }
 
 async function getUpcomingAndNewGames(): Promise<HomeGamesResponse> {
-  const res = await fetch("http://localhost:5195/api/HomeGames", {
+  const res = await fetch(`${API_URL}/api/HomeGames`, {
     next: { revalidate: 21600 },
   });
   if (!res.ok) throw new Error("Erro ao buscar jogos da home");
@@ -38,7 +39,7 @@ async function getUpcomingAndNewGames(): Promise<HomeGamesResponse> {
 }
 
 async function getRandomGames(): Promise<RandomGame[]> {
-  const res = await fetch("http://localhost:5195/api/HomeGames/random-games", {
+  const res = await fetch(`${API_URL}/api/HomeGames/random-games`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error("Erro ao buscar jogos aleatórios");
@@ -46,7 +47,7 @@ async function getRandomGames(): Promise<RandomGame[]> {
 }
 
 async function getUserGames(token: string): Promise<UserGame[]> {
-  const res = await fetch("http://localhost:5195/api/UserGame", {
+  const res = await fetch(`${API_URL}/api/UserGame`, {
     headers: { Cookie: `token=${token}` },
     cache: "no-store",
   });
