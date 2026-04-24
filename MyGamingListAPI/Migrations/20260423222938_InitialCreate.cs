@@ -62,7 +62,7 @@ namespace MyGamingListAPI.Migrations
                     Description = table.Column<string>(type: "text", nullable: true),
                     Slug = table.Column<string>(type: "text", nullable: false),
                     BackgroundImage = table.Column<string>(type: "text", nullable: true),
-                    ReleaseDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ReleaseDate = table.Column<DateOnly>(type: "date", nullable: true),
                     Tba = table.Column<bool>(type: "boolean", nullable: false),
                     Rating = table.Column<decimal>(type: "numeric(3,2)", precision: 3, scale: 2, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -82,7 +82,7 @@ namespace MyGamingListAPI.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     BackgroundImage = table.Column<string>(type: "text", nullable: true),
                     Type = table.Column<int>(type: "integer", nullable: false),
-                    Released = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Released = table.Column<DateOnly>(type: "date", nullable: true),
                     LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -203,7 +203,7 @@ namespace MyGamingListAPI.Migrations
                     UserId = table.Column<string>(type: "text", nullable: false),
                     GameId = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     IsFavorite = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>

@@ -133,7 +133,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao buscar jogos {Id}", externalId);
+                _logger.LogError(ex, "Erro ao buscar jogo {Id}", externalId);
                 throw;
             }
         }
@@ -182,7 +182,7 @@ namespace MyGamingListAPI.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao buscar jogos {Id}", externalId);
+                _logger.LogError(ex, "Erro ao buscar jogo {Id}", externalId);
                 throw;
             }
         }

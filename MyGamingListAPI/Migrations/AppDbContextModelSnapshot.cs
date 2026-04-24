@@ -246,8 +246,8 @@ namespace MyGamingListAPI.Migrations
                         .HasPrecision(3, 2)
                         .HasColumnType("numeric(3,2)");
 
-                    b.Property<DateTime?>("ReleaseDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("ReleaseDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -284,8 +284,8 @@ namespace MyGamingListAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("Released")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("Released")
+                        .HasColumnType("date");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
@@ -303,8 +303,8 @@ namespace MyGamingListAPI.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("CreatedAt")
+                        .HasColumnType("date");
 
                     b.Property<bool?>("IsFavorite")
                         .HasColumnType("boolean");

@@ -38,6 +38,7 @@ export default function GameCard({
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
   const [completedState, setCompletedState] = useState<CompletedState>(resolveCompletedState(initialStatus));
+  const [currentStatus, setCurrentStatus] = useState<number | null>(initialStatus);
   const [toast, setToast] = useState<string | null>(null);
 
   const formattedDate = releaseDate

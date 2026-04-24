@@ -7,7 +7,7 @@
         public int GameId { get; set; }
         public Game Game { get; set; } = null!;
         public GameStatus? Status { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateOnly CreatedAt { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
         public bool? IsFavorite { get; set; } = false;
     }
 

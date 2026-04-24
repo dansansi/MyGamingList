@@ -8,7 +8,7 @@ namespace MyGamingListAPI.DTOs.UserGame
         public string GameName { get; set; } = null!;
         public GameStatus? Status { get; set; }
         public bool? IsFavorite { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateOnly CreatedAt { get; set; }
 
         public string? BackgroundImage { get; set; }
     }

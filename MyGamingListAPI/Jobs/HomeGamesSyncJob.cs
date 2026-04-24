@@ -1,5 +1,4 @@
-﻿using MyGamingListAPI.Services.Implementations;
-using MyGamingListAPI.Services.Interfaces;
+﻿using MyGamingListAPI.Services.Interfaces;
 
 namespace MyGamingListAPI.Jobs
 {
