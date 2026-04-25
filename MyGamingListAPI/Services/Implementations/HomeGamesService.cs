@@ -31,7 +31,7 @@ namespace MyGamingListAPI.Services.Implementations
                     BackgroundImage = g.Background_Image,
                     Released = g.Released,
                     Type = HomeGameType.Upcoming,
-                    LastUpdated = DateTime.Now
+                    LastUpdated = DateTime.UtcNow
                 });
 
                 var hotReleases = hotReleasesTask.Result.Select(g => new HomeGames
@@ -41,7 +41,7 @@ namespace MyGamingListAPI.Services.Implementations
                     BackgroundImage = g.Background_Image,
                     Released = g.Released,
                     Type = HomeGameType.HotRelease,
-                    LastUpdated = DateTime.Now
+                    LastUpdated = DateTime.UtcNow
                 });
 
                 _context.AddRange(upcoming);

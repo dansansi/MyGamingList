@@ -1,7 +1,9 @@
-export async function GET(request: Request, { params }: { params: { externalId: string } }) {
+import { API_URL } from "@/lib/api";
+
+export async function GET(request: Request, { params }: { params: Promise<{ externalId: string }> }) {
   const { externalId } = await params;
 
-  const res = await fetch(`http://localhost:5195/api/Game/ensure/${externalId}`);
+  const res = await fetch(`${API_URL}/api/Game/ensure/${externalId}`);
 
   return new Response(null, { status: res.status });
 }

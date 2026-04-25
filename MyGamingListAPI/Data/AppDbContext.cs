@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyGamingListAPI.Models;
 
@@ -23,6 +22,10 @@ namespace MyGamingListAPI.Data
                 .HasForeignKey(ug => ug.UserId);
 
             builder.Entity<UserGames>()
+                .Property(ug => ug.CreatedAt)
+                .HasColumnType("date");
+
+            builder.Entity<UserGames>()
                 .HasOne(ug => ug.Game)
                 .WithMany(g => g.UserGames)
                 .HasForeignKey(ug => ug.GameId);
@@ -34,6 +37,14 @@ namespace MyGamingListAPI.Data
             builder.Entity<Game>()
                 .Property(g => g.Rating)
                 .HasPrecision(3, 2);
+
+            builder.Entity<Game>()
+                .Property(g => g.CreatedAt)
+                .HasColumnType("timestamp with time zone");
+
+            builder.Entity<HomeGames>()
+                .Property(g => g.LastUpdated)
+                .HasColumnType("timestamp with time zone");
         }
     }
 }

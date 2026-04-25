@@ -8,8 +8,8 @@ namespace MyGamingListAPI.Services.Implementations
     {
         private readonly string _smtpHost = "smtp.gmail.com";
         private readonly int _smtpPort = 587;
-        private readonly string _smtpUser = "MyGamingListSansi@gmail.com";
-        private readonly string _smtpPass = configuration["E-mail:Key"]!;
+        private readonly string _smtpUser = configuration["Email:User"]!;
+        private readonly string _smtpPass = configuration["Email:Key"]!;
         private readonly ILogger<EmailService> _logger = logger;
 
 
@@ -20,9 +20,9 @@ namespace MyGamingListAPI.Services.Implementations
                 using var client = new SmtpClient(_smtpHost, _smtpPort)
                 {
                     Credentials = new NetworkCredential(_smtpUser, _smtpPass),
-                    EnableSsl = true
+                    EnableSsl = true,
                 };
-
+                Console.WriteLine("Info de smtp" + _smtpUser, _smtpPass);
                 var mail = new MailMessage(_smtpUser, to, subject, body)
                 {
                     IsBodyHtml = true

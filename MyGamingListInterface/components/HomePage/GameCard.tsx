@@ -4,15 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { GameStatus } from "@/types/userGame";
-
-type CompletedState = "none" | "other" | "completed";
-
-function resolveCompletedState(status: number | null): CompletedState {
-  if (status === GameStatus.Completed) return "completed";
-  if (status !== null) return "other";
-  return "none";
-}
 
 interface GameCardProps {
   externalId: number;
@@ -37,7 +28,7 @@ export default function GameCard({
 }: GameCardProps) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
-  const [completedState, setCompletedState] = useState<CompletedState>(resolveCompletedState(initialStatus));
+  const [gameStatus, setGameStatus] = useState(initialStatus);
   const [toast, setToast] = useState<string | null>(null);
 
   const formattedDate = releaseDate
@@ -71,7 +62,7 @@ export default function GameCard({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         externalId,
-        status: initialStatus ? Number(GameStatus.Completed) : null,
+        status: gameStatus,
         isFavorite: newFavorite,
       }),
     });
@@ -97,8 +88,7 @@ export default function GameCard({
       return;
     }
 
-    const sendCompleted = completedState !== "completed";
-    const newStatus = sendCompleted ? Number(GameStatus.Completed) : null;
+    const newStatus = gameStatus === 2 ? null : 2;
 
     const response = await fetch("/api/userGame", {
       method: "POST",
@@ -111,8 +101,8 @@ export default function GameCard({
     });
     if (!response.ok) showToast("Erro ao atualizar status");
     else {
-      setCompletedState(newStatus ? "completed" : "none");
-      showToast(newStatus ? "Marcado como concluído" : "Removido dos concluídos");
+      setGameStatus(newStatus ? 2 : null);
+      showToast(gameStatus ? "Marcado como concluído" : "Removido dos concluídos");
     }
   }
 
@@ -135,9 +125,9 @@ export default function GameCard({
                   className="text-lg leading-none p-1 rounded-md bg-zinc-900/70 hover:bg-zinc-900 transition-colors"
                   aria-label="Marcar como concluído"
                 >
-                  {completedState === "none" && <span className="text-zinc-500">Not started</span>}
-                  {completedState === "completed" && <span className="text-green-400">Completed</span>}
-                  {completedState === "other" && <span className="text-yellow-400">In Progress</span>}
+                  {gameStatus === null && <span className="text-zinc-500">Not started</span>}
+                  {gameStatus === 2 && <span className="text-green-400">Completed</span>}
+                  {gameStatus !== 2 && gameStatus !== null && <span className="text-yellow-400">In Progress</span>}
                 </button>
 
                 <button

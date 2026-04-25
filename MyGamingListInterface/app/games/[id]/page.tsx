@@ -2,6 +2,7 @@ import { Game } from "@/types/game";
 import Image from "next/image";
 import GameActions from "./GameActions";
 import { cookies } from "next/headers";
+import { API_URL } from "@/lib/api";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -27,12 +28,12 @@ export default async function GamePage({ params }: Props) {
     cookieStore.delete("token");
   }
 
-  const userGameResponse = await fetch(`http://localhost:5195/api/UserGame/${id}`, {
+  const userGameResponse = await fetch(`${API_URL}/api/UserGame/${id}`, {
     headers: { Cookie: `token=${token}` },
   });
   const userGame = userGameResponse.ok ? await userGameResponse.json() : null;
 
-  const response = await fetch(`http://localhost:5195/api/game/${id}`);
+  const response = await fetch(`${API_URL}/api/game/${id}`);
   const game: Game = await response.json();
 
   return (

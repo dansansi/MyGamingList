@@ -1,9 +1,10 @@
+import { API_URL } from "@/lib/api";
 import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
-  const response = await fetch("http://localhost:5195/api/auth/register", {
+  const response = await fetch(`${API_URL}/api/auth/register`, {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(body),

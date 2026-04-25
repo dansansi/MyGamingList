@@ -1,5 +1,7 @@
+import { API_URL } from "@/lib/api";
+
 export async function GET() {
-  const res = await fetch("http://localhost:5195/api/HomeGames/random-games", {
+  const res = await fetch(`${API_URL}/api/HomeGames/random-games`, {
     cache: "no-store",
   });
 
