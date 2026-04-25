@@ -3,7 +3,6 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { API_URL } from "@/lib/api";
 
 function ResetPasswordPageContent() {
   const searchParams = useSearchParams();
@@ -34,7 +33,7 @@ function ResetPasswordPageContent() {
     setErrorMsg("");
 
     try {
-      const res = await fetch(`${API_URL}/api/Auth/reset-password`, {
+      const res = await fetch(`/api/auth/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, token, newPassword }),
