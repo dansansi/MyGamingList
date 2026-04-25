@@ -19,10 +19,10 @@ namespace MyGamingListAPI.Services.Implementations
 
         public async Task<(bool Success, string Message)> RegisterAsync(RegisterDTO dto)
         {
-            if (await _userManager.FindByNameAsync(dto.UserName) != null)
+            if (await _userManager.FindByNameAsync(dto.UserName!) != null)
                 return (false, "Usuário já cadastrado");
 
-            if (await _userManager.FindByEmailAsync(dto.Email) != null)
+            if (await _userManager.FindByEmailAsync(dto.Email!) != null)
                 return (false, "E-mail já cadastrado");
 
             var user = new AppUser
@@ -31,7 +31,7 @@ namespace MyGamingListAPI.Services.Implementations
                 Email = dto.Email,
             };
 
-            var result = await _userManager.CreateAsync(user, dto.Password);
+            var result = await _userManager.CreateAsync(user, dto.Password!);
             if (!result.Succeeded)
                 return (false, string.Join(", ", result.Errors.Select(e => e.Description)));
 
@@ -41,14 +41,14 @@ namespace MyGamingListAPI.Services.Implementations
 
         public async Task<(bool Success, string? Token, string Message)> LoginAsync(LoginDto dto)
         {
-            var user = dto.Login.Contains("@")
+            var user = dto.Login!.Contains("@")
                 ? await _userManager.FindByEmailAsync(dto.Login)
                 : await _userManager.FindByNameAsync(dto.Login);
 
             if (user == null)
                 return (false, null, "Usuário inválido");
 
-            if (!await _userManager.CheckPasswordAsync(user, dto.Password))
+            if (!await _userManager.CheckPasswordAsync(user, dto.Password!))
                 return (false, null, "Senha inválida");
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -79,11 +79,11 @@ namespace MyGamingListAPI.Services.Implementations
 
         public async Task<(bool Success, IEnumerable<string> Errors)> ResetPasswordAsync(ResetPasswordDto dto)
         {
-            var user = await _userManager.FindByEmailAsync(dto.Email);
+            var user = await _userManager.FindByEmailAsync(dto.Email!);
             if (user == null) return (true, []);
 
-            var decodedToken = WebUtility.UrlDecode(dto.Token).Replace(" ", "+");
-            var result = await _userManager.ResetPasswordAsync(user, decodedToken, dto.NewPassword);
+            var decodedToken = WebUtility.UrlDecode(dto.Token!).Replace(" ", "+");
+            var result = await _userManager.ResetPasswordAsync(user, decodedToken, dto.NewPassword!);
 
             if (!result.Succeeded)
                 return (false, result.Errors.Select(e => e.Description));

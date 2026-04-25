@@ -46,7 +46,7 @@ namespace MyGamingListAPI.Services.Implementations
 
                 _context.AddRange(upcoming);
                 _context.AddRange(hotReleases);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
 
                 _logger.LogInformation("Concluida atualização de jogos da Home");
             }

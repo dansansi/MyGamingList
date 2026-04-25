@@ -428,3 +428,5 @@ FodyWeavers.xsd
 /MyGamingListAPI/Dockerfile
 /MyGamingListInterface/Dockerfile
 docker-compose.yml
+/MyGamingListAPI/appsettings.json
+/MyGamingListAPI/appsettings.Developmento.json

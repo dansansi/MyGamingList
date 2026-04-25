@@ -1,7 +1,7 @@
-import { API_URL } from "@/lib/api";
+import { apiUrl } from "@/lib/api";
 
 export async function GET() {
-  const res = await fetch(`${API_URL}/api/HomeGames/random-games`, {
+  const res = await fetch(`${apiUrl}/api/HomeGames/random-games`, {
     cache: "no-store",
   });
 

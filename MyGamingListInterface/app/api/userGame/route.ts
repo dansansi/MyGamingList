@@ -1,4 +1,4 @@
-import { API_URL } from "@/lib/api";
+import { apiUrl } from "@/lib/api";
 import { cookies } from "next/headers";
 
 export async function POST(request: Request) {
@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
-  const response = await fetch(`${API_URL}/api/UserGame`, {
+  const response = await fetch(`${apiUrl}/api/UserGame`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export async function GET() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
-  const res = await fetch(`${API_URL}/api/UserGame`, {
+  const res = await fetch(`${apiUrl}/api/UserGame`, {
     headers: { Cookie: `token=${token}` },
     cache: "no-store",
   });

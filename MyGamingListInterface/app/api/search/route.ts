@@ -1,4 +1,4 @@
-import { API_URL } from "@/lib/api";
+import { apiUrl } from "@/lib/api";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     return Response.json([]);
   }
 
-  const response = await fetch(`${API_URL}/rawgApi/Rawg/search?query=${query}&page=1`);
+  const response = await fetch(`${apiUrl}/rawgApi/Rawg/search?query=${query}&page=1`);
 
   const data = await response.json();
 

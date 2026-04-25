@@ -1,7 +1,7 @@
-import { API_URL } from "@/lib/api";
+import { apiUrl } from "@/lib/api";
 
 export async function GET() {
-  const response = await fetch(`${API_URL}/api/Game/background-image`);
+  const response = await fetch(`${apiUrl}/api/Game/background-image`);
 
   return response;
 }

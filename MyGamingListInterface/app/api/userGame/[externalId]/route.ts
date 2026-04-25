@@ -1,4 +1,4 @@
-import { API_URL } from "@/lib/api";
+import { apiUrl } from "@/lib/api";
 import { cookies } from "next/headers";
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ externalId: string }> }) {
@@ -6,7 +6,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ e
   const token = cookieStore.get("token")?.value;
   const { externalId } = await params;
 
-  const res = await fetch(`${API_URL}/api/UserGame/${externalId}`, {
+  const res = await fetch(`${apiUrl}/api/UserGame/${externalId}`, {
     method: "DELETE",
     headers: { Cookie: `token=${token}` },
   });
