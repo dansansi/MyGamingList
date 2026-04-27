@@ -199,4 +199,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+
 app.Run();
