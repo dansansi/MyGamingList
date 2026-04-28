@@ -8,6 +8,7 @@ namespace MyGamingListAPI.Services.Implementations
         private readonly HttpClient _httpClient = httpClient;
         private readonly string _apiKey = configuration["Rawg:ApiKey"]!;
         private readonly ILogger _logger = logger;
+        private static readonly HashSet<int> _blockedIds = [963477, 707343, 542349, 743549, 743521, 747685];
 
         public async Task<List<RawgGameDto>> SearchGamesAsync (string query, int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {
@@ -16,7 +17,7 @@ namespace MyGamingListAPI.Services.Implementations
                 var url = $"games?key={_apiKey}&search={query}&page={page}&page_size={pageSize}";
                 var response = await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(url, cancellationToken);
 
-                return response?.Results ?? new List<RawgGameDto>();
+                return response?.Results ?? [];
             }
             catch (Exception ex)
             {
@@ -52,7 +53,7 @@ namespace MyGamingListAPI.Services.Implementations
                 var upcomingUrl = $"games?key={_apiKey}&dates={tomorrow},{futureDate}&ordering=released&page-size=20";
                 var upcoming =  await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(upcomingUrl, cancellationToken);
 
-                return upcoming!.Results ?? new List<RawgGameDto>();
+                return upcoming!.Results ?? [];
             }
             catch (Exception ex)
             {
@@ -72,7 +73,7 @@ namespace MyGamingListAPI.Services.Implementations
 
                 var hotReleases = await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(hotReleasesUrl, cancellationToken);
 
-                return hotReleases!.Results?? new List<RawgGameDto>();
+                return hotReleases!.Results?? [];
             }
             catch (Exception ex)
             {
@@ -85,18 +86,20 @@ namespace MyGamingListAPI.Services.Implementations
         {
             try
             {
+
                 var randomPage = new Random().Next(1, 11);
                 var url = $"games?key={_apiKey}" +
                           $"&dates=1993-01-01,{DateTime.UtcNow:yyyy-MM-dd}" +
                           $"&platforms=1,4,7,8,9,10,11,14,15,16,18,27,49,74,79,80,83,105,106,107,167,186,187" +
                           $"&ratings_count=10" +
-                          $"&page_size=40" +
+                          $"&page_size=25" +
                           $"&page={randomPage}" +
                           $"&ordering=-rating" +
                           $"&esrb_rating=1,2,3,4";
 
                 var response = await _httpClient.GetFromJsonAsync<RawgGameResponseDto>(url, cancellationToken);
-                return response?.Results ?? new List<RawgGameDto>();
+
+                return response?.Results!.Where(g => !_blockedIds.Contains(g.Id)).ToList() ?? [];
             }
             catch (Exception ex)
             {

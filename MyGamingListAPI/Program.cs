@@ -199,6 +199,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapMethods("/health", new[] { "GET", "HEAD" }, () => Results.Ok(new { status = "ok" }));
+app.MapMethods("/health", ["GET", "HEAD"], () => Results.Ok(new { status = "ok" }));
 
 app.Run();

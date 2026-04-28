@@ -41,7 +41,7 @@ namespace MyGamingListAPI.Controllers
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] PasswordRecoveryDto dto)
         {
-            await _authService.ForgotPasswordAsync(dto.Email);
+            await _authService.ForgotPasswordAsync(dto.Email!);
             return Ok();
         }
 
