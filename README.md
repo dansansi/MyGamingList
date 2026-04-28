@@ -14,9 +14,13 @@ Track all your games - what you played, what you're playing, what you're wishing
 
 <img width="879" height="454" alt="Login screen with dynamic background" src="https://github.com/user-attachments/assets/21ae5cc1-a4ad-44a2-a06d-9c1bd5db549b" />
 
+
+
 📖 About
 MyGamingList is a full-stack web application that lets you manage your personal game library. Search any game, add it to your list, set its status, and mark your favorites — all in one place.
 Game data is powered by the RAWG API, one of the largest video game databases available.
+
+
 
 ✨ Features
 
@@ -28,7 +32,12 @@ Game data is powered by the RAWG API, one of the largest video game databases av
 🔐 Authentication — secure register and login with JWT stored in HttpOnly cookies
 🎨 Dynamic Login Background — login page background changes on every visit
 
+
+
 🖥️ Screenshots
+
+
+
 Home
 <img width="1845" height="914" alt="Home page" src="https://github.com/user-attachments/assets/1727485d-02f0-4b9b-bbc1-aa09d23b3073" />
 Game List
