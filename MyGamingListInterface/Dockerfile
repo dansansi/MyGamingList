@@ -14,5 +14,7 @@ COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public
 
+ENV PORT=10000
+ENV HOSTNAME=0.0.0.0
 EXPOSE 10000
-ENTRYPOINT ["node", "server.js"]
+CMD ["node", "server.js"]
