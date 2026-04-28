@@ -32,9 +32,8 @@ Game data is powered by the RAWG API, one of the largest video game databases av
 🔐 Authentication — secure register and login with JWT stored in HttpOnly cookies
 🎨 Dynamic Login Background — login page background changes on every visit.
 
----
 
-Screenshots
+## Screenshots
 
 ## Home
 
