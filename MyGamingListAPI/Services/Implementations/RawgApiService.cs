@@ -8,7 +8,7 @@ namespace MyGamingListAPI.Services.Implementations
         private readonly HttpClient _httpClient = httpClient;
         private readonly string _apiKey = configuration["Rawg:ApiKey"]!;
         private readonly ILogger _logger = logger;
-        private static readonly HashSet<int> _blockedIds = [963477, 707343, 542349, 743549, 743521, 747685];
+        private static readonly HashSet<int> _blockedIds = [963477, 707343, 542349, 743549, 743521, 747685, 745492];
 
         public async Task<List<RawgGameDto>> SearchGamesAsync (string query, int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {
