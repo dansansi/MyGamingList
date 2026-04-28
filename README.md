@@ -32,7 +32,7 @@ Game data is powered by the RAWG API, one of the largest video game databases av
 🔐 Authentication — secure register and login with JWT stored in HttpOnly cookies
 🎨 Dynamic Login Background — login page background changes on every visit
 
-
+---
 
 🖥️ Screenshots
 
@@ -42,16 +42,21 @@ Home
 
 <img width="1845" height="914" alt="Home page" src="https://github.com/user-attachments/assets/1727485d-02f0-4b9b-bbc1-aa09d23b3073" />
 
+
 Game List
 
 <img width="1846" height="927" alt="Game list" src="https://github.com/user-attachments/assets/63e6c707-5e8f-426a-af8b-005031994dbd" />
+
 
 Profile
 
 <img width="1250" height="498" alt="Profile dashboard" src="https://github.com/user-attachments/assets/bff6bf62-d9a0-4d9e-97ba-43d6bdfa8bd1" />
 
+---
 
 🛠️ Tech Stack
+
+
 Backend
 
 .NET 8 / ASP.NET Core Web API
@@ -73,6 +78,7 @@ Render (backend + frontend)
 Neon (PostgreSQL)
 UptimeRobot (uptime monitoring)
 
+---
 
 ## 🌐 Live Demo
 
