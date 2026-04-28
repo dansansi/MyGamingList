@@ -102,7 +102,7 @@ export default function GameCard({
     if (!response.ok) showToast("Erro ao atualizar status");
     else {
       setGameStatus(newStatus ? 2 : null);
-      showToast(gameStatus ? "Marcado como concluído" : "Removido dos concluídos");
+      showToast(newStatus ? "Marcado como concluído" : "Removido dos concluídos");
     }
   }
 
