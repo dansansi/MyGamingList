@@ -16,13 +16,13 @@ Track all your games - what you played, what you're playing, what you're wishing
 
 
 
-📖 About
+## About
 MyGamingList is a full-stack web application that lets you manage your personal game library. Search any game, add it to your list, set its status, and mark your favorites — all in one place.
 Game data is powered by the RAWG API, one of the largest video game databases available.
 
 
 
-✨ Features
+## Features
 
 🔍 Game Search — search from a database of hundreds of thousands of games via RAWG API
 📋 Game List — add games and track their status: Playing, Completed, Paused, Dropped, or Wishlist
@@ -34,27 +34,27 @@ Game data is powered by the RAWG API, one of the largest video game databases av
 
 ---
 
-🖥️ Screenshots
+## Screenshots
 
 
 
-Home
+## Home
 
 <img width="1845" height="914" alt="Home page" src="https://github.com/user-attachments/assets/1727485d-02f0-4b9b-bbc1-aa09d23b3073" />
 
 
-Game List
+## Game List
 
 <img width="1846" height="927" alt="Game list" src="https://github.com/user-attachments/assets/63e6c707-5e8f-426a-af8b-005031994dbd" />
 
 
-Profile
+## Profile
 
 <img width="1250" height="498" alt="Profile dashboard" src="https://github.com/user-attachments/assets/bff6bf62-d9a0-4d9e-97ba-43d6bdfa8bd1" />
 
 ---
 
-🛠️ Tech Stack
+## Tech Stack
 
 
 Backend
@@ -80,7 +80,7 @@ UptimeRobot (uptime monitoring)
 
 ---
 
-## 🌐 Live Demo
+## Live Demo
 
 The project is fully deployed and ready to use:
 
