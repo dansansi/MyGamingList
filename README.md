@@ -24,13 +24,14 @@ Game data is powered by the RAWG API, one of the largest video game databases av
 
 ## Features
 
-🔍 Game Search — search from a database of hundreds of thousands of games via RAWG API
-📋 Game List — add games and track their status: Playing, Completed, Paused, Dropped, or Wishlist
-⭐ Favorites — mark your most loved games and access them quickly
-📊 Profile Dashboard — see your stats at a glance (total games, completed, wishlist, favorites)
-🏠 Home Page — browse Upcoming and New Releases, and discover new games
-🔐 Authentication — secure register and login with JWT stored in HttpOnly cookies
-🎨 Dynamic Login Background — login page background changes on every visit.
+- 🔍 Game Search — search from a database of hundreds of thousands of games via RAWG API.
+- 📋 Game List — add games and track their status: Playing, Completed, Paused, Dropped, or Wishlist.
+- ⭐ Favorites — mark your most loved games and access them quickly.
+- 📊 Profile Dashboard — see your stats at a glance (total games, completed, wishlist, favorites).
+- 🏠 Home Page — browse Upcoming and New Releases, and discover new games.
+- 🔐 Authentication — secure register and login with JWT stored in HttpOnly cookies.
+- 🎨 Dynamic Login Background — login page background changes on every visit.
+- 🔄 Reload of the games in the homepage with the refresh button on the bottom right corner of the screen.
 
 
 ## Screenshots
@@ -53,7 +54,7 @@ Game data is powered by the RAWG API, one of the largest video game databases av
 ## Tech Stack
 
 
-Backend
+### Backend
 
 .NET 8 / ASP.NET Core Web API
 Entity Framework Core
@@ -61,14 +62,14 @@ ASP.NET Core Identity
 JWT Authentication (HttpOnly cookie via Next.js API route)
 PostgreSQL (Neon)
 
-Frontend
+### Frontend
 
 Next.js 14 (App Router)
 TypeScript
 Tailwind CSS
 RAWG API
 
-Infrastructure
+### Infrastructure
 
 Render (backend + frontend)
 Neon (PostgreSQL)
@@ -82,6 +83,6 @@ The project is fully deployed and ready to use:
 
 **[https://mygaminglist-ielz.onrender.com](https://mygaminglist-ielz.onrender.com)**
 
-> ⚠️ Hosted on Render's free tier — the backend may take ~30 seconds to wake up on the first request.
-> ⚠️ PostgreSQL is hosted on Neon and the most heavy stuff from the application may have some lag due to servers beign too far away from each other.
-> ⚠️ On the first visit after being logged in, authentication state may not load correctly due to cold start latency — a quick refresh fixes it (I'll work on it!).
+- ⚠️ PostgreSQL is hosted on Neon and the most heavy stuff from the application may have some lag due to servers beign too far away from each other.
+- ⚠️ On the first visit after being logged in, authentication state may not load correctly due to cold start latency — a quick refresh fixes it (I'll work on it!).
+- ⚠️ Hosted on Render's free tier — the backend may take ~30 seconds to wake up on the first request.
