@@ -1,6 +1,6 @@
 # MyGamingList
 
-Track all your games - what you played, what you're playing, what you're wishing, your favorites and even the ones you hated.
+Track all your games, what you played, what you're playing, what you're wishing, your favorites and even the ones you hated.
 
 ## Tech Stack
 
@@ -17,20 +17,20 @@ Track all your games - what you played, what you're playing, what you're wishing
 
 
 ## About
-MyGamingList is a full-stack web application that lets you manage your personal game library. Search any game, add it to your list, set its status, and mark your favorites — all in one place.
+MyGamingList is a full-stack web application that lets you manage your personal game library. Search any game, add it to your list, set its status, and mark your favorites all in one place.
 Game data is powered by the RAWG API, one of the largest video game databases available.
 
 
 
 ## Features
 
-- 🔍 Game Search — search from a database of hundreds of thousands of games via RAWG API.
-- 📋 Game List — add games and track their status: Playing, Completed, Paused, Dropped, or Wishlist.
-- ⭐ Favorites — mark your most loved games and access them quickly.
-- 📊 Profile Dashboard — see your stats at a glance (total games, completed, wishlist, favorites).
-- 🏠 Home Page — browse Upcoming and New Releases, and discover new games.
-- 🔐 Authentication — secure register and login with JWT stored in HttpOnly cookies.
-- 🎨 Dynamic Login Background — login page background changes on every visit.
+- 🔍 Game Search - search from a database of hundreds of thousands of games via RAWG API.
+- 📋 Game List - add games and track their status: Playing, Completed, Paused, Dropped, or Wishlist.
+- ⭐ Favorites - mark your most loved games and access them quickly.
+- 📊 Profile Dashboard - see your stats at a glance (total games, completed, wishlist, favorites).
+- 🏠 Home Page - browse Upcoming and New Releases, and discover new games.
+- 🔐 Authentication - secure register and login with JWT stored in HttpOnly cookies.
+- 🎨 Dynamic Login Background - login page background changes on every visit.
 - 🔄 Reload of the games in the homepage with the refresh button on the bottom right corner of the screen.
 
 
@@ -84,5 +84,5 @@ The project is fully deployed and ready to use:
 **[https://mygaminglist-ielz.onrender.com](https://mygaminglist-ielz.onrender.com)**
 
 - ⚠️ PostgreSQL is hosted on Neon and the most heavy stuff from the application may have some lag due to servers beign too far away from each other.
-- ⚠️ On the first visit after being logged in, authentication state may not load correctly due to cold start latency — a quick refresh fixes it (I'll work on it!).
-- ⚠️ Hosted on Render's free tier — the backend may take ~30 seconds to wake up on the first request.
+- ⚠️ On the first visit after being logged in, authentication state may not load correctly due to cold start latency but a quick refresh fixes it (I'll work on it!).
+- ⚠️ Hosted on Render's free tier and the backend may take about 30 seconds to wake up on the first request.
