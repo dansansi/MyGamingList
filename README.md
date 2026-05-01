@@ -38,7 +38,7 @@ Game data is powered by the RAWG API, one of the largest video game databases av
 
 ### Home
 
-<img width="1845" height="917" alt="Image" src="https://github.com/user-attachments/assets/43b912a4-c753-400b-a19f-a62ebf8d1866" />
+<img width="1842" height="932" alt="Image" src="https://github.com/user-attachments/assets/1529c80f-389a-4ed4-8282-a51a3e4c4d23" />
 
 
 ### Game List
